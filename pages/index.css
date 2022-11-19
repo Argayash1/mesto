@@ -20,12 +20,12 @@
 
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/elements-list/elements-list.css);
-@import url(../blocks/elements-list/__element/element-list__element.css);
-@import url(../blocks/elements-list/__image/element-list__image.css);
-@import url(../blocks/elements-list/__info/element-list__info.css);
-@import url(../blocks/elements-list/__title/element-list__title.css);
-@import url(../blocks/elements-list/__like-button/element-list__like-button.css);
-@import url(../blocks/elements-list/__like-button/_active/element-list__like-button_active.css);
+@import url(../blocks/element/element.css);
+@import url(../blocks/element/__image/element__image.css);
+@import url(../blocks/element/__info/element__info.css);
+@import url(../blocks/element/__title/element__title.css);
+@import url(../blocks/element/__like-button/element__like-button.css);
+@import url(../blocks/element/__like-button/_active/element__like-button_active.css);
 
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_is-opened/popup_is-opened.css);
