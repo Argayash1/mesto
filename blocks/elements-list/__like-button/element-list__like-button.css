@@ -1,7 +1,7 @@
 .element-list__like-button{
     min-width: 22px;
     min-height: 19px;
-    background: url(../../../images/elements-like-button.svg) center no-repeat;  
+    background: url(../../../images/elements-like-button.svg) center no-repeat;
     background-size: cover;
     border: none;
     cursor: pointer;

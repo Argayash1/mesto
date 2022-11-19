@@ -1,7 +1,7 @@
 .profile-info__edit-button{
     width: 24px;
     height: 24px;
-    background: url(../../../images/profile-edit-button.svg) #000000 no-repeat center; 
+    background: url(../../../images/profile-edit-button.svg) #000000 no-repeat center;
     box-sizing: border-box;
     border: 1px solid #FFFFFF;
     align-self: flex-start;
