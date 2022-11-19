@@ -4,7 +4,7 @@
     right: -35px;
     min-width: 32px;
     min-height: 32px;
-    background: url(/images/popup-close.svg) rgba(0, 0, 0, 0) no-repeat center;
+    background: url(../../../images/popup-close.svg) rgba(0, 0, 0, 0) no-repeat center;
     background-size: cover;
     border: none;
     cursor: pointer;
