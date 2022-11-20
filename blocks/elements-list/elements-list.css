@@ -1,9 +1,8 @@
-.elements-list{
+.elements-list {
     max-width: 880px;
     display: grid;
     grid-template-columns: repeat(auto-fit, 282px);
-    row-gap: 20px;
-    column-gap: 17px;
+    gap: 20px 17px;
     list-style: none;
     padding: 0;
     margin: 0 auto;

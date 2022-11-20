@@ -1,4 +1,4 @@
-.page{
+.page {
     background: #000000;
     color: #ffffff;
     font-weight: 400;
@@ -10,8 +10,10 @@
     text-rendering: optimizeLegibility;
 }
 
-@media screen and (max-width: 968px){
+@media screen and (max-width: 968px) {
     .page {
         padding: 28px 0 36px;
     }
 }
+
+/*{border: 1px solid red;}

@@ -1,4 +1,4 @@
-.popup__close{
+.popup__close {
   position: absolute;
   top: -35px;
   right: -35px;
@@ -12,17 +12,17 @@
   background-size: cover;
   cursor: pointer;
   opacity: 1;
-  transition: opacity 1s linear;
+  transition: opacity .5s linear;
+}
+
+.popup__close:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 550px) {
+  .popup__close {
+    min-width: 20px;
+    min-height: 20px;
+    right: 0;
   }
-  
-  .popup__close:hover {
-    opacity: 0.6;
-  }
-  
-  @media screen and (max-width: 550px) {
-    .popup__close {
-      min-width: 20px;
-      min-height: 20px;
-      right: 0;
-    }
-  }
+}

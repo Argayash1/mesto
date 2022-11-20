@@ -1,14 +1,15 @@
-.element__like-button{
+.element__like-button {
     min-width: 22px;
     min-height: 19px;
     background: url(../../../images/elements-like-button.svg) center no-repeat;
-    background-size: cover;
     border: none;
     cursor: pointer;
+    align-self: flex-start;
+    margin: 5px 5px 0 0;
     opacity: 1;
-    transition: opacity 1s linear;
+    transition: opacity .5s linear;
 }
 
-.element__like-button:hover{
-    opacity: 0.5; 
+.element__like-button:hover {
+    opacity: 0.5;
 }
