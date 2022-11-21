@@ -18,7 +18,13 @@
   margin-bottom: 47px;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 740px) {
+  .popup__input{
+    margin-bottom: 28px;
+  }
+}
+
+@media screen and (max-width: 740px) {
   .popup__input:nth-child(2) {
     margin-bottom: 45px;
   }

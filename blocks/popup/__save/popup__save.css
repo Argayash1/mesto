@@ -23,10 +23,10 @@
   opacity: 0.8;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 740px) {
   .popup__save {
-    min-width: 238px;
-    min-height: 46px;
+    max-width: 238px;
+    max-height: 46px;
     font-size: 14px;
   }
 }
