@@ -1,11 +1,11 @@
-const popupElement = document.querySelector('.popup'); //Ищем попап в разметке
-const popupCloseButtonElement = popupElement.querySelector('.popup__close'); //Ищем кнопку закрытия попапа в блоке popup
-const popupOpenButtonElement = document.querySelector('.profile-info__edit-button'); // Ищем кнопку открытия попапа
-const profileNameElement = document.querySelector('.profile-info__name'); //Ищем строку с именем профиля
+const popupElement = document.querySelector('.popup'); //Нашли попап в разметке
+const popupCloseButtonElement = popupElement.querySelector('.popup__close'); //Нашли кнопку закрытия попапа в блоке popup
+const popupOpenButtonElement = document.querySelector('.profile-info__edit-button'); // Нашли кнопку открытия попапа
+const profileNameElement = document.querySelector('.profile-info__name'); //Нашли строку с именем профиля
 const profileProfessionElement = document.querySelector('.profile-info__profession'); //Ищем строку с профессией профиля
-const formElement = popupElement.querySelector('.popup__form'); //Ищем форму в блоке popup
-const nameInput = formElement.querySelector('input[name="name"]'); //Ищем инпут для имени в форме
-const jobInput = formElement.querySelector('input[name="job"]'); //Ищем инпут для профессии в форме 
+const formElement = popupElement.querySelector('.popup__form'); //Нашли форму в блоке popup
+const nameInput = formElement.querySelector('input[name="name"]'); //Нашли инпут для имени в форме
+const jobInput = formElement.querySelector('input[name="job"]'); //Нашли инпут для профессии в форме 
 
 const openPopup = function () {
     popupElement.classList.add('popup_is-opened');
