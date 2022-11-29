@@ -43,8 +43,8 @@ function createElement(item) {
   const elementImg = elementElement.querySelector('.element__image'); //Нашли  в HTML-коде элемент с изображением карточки (пункта/элемента списка).
   const elementDeleteButton = elementElement.querySelector('.element__delete-button'); //Нашли  в HTML-коде элемент кнопки "Удалить".
   const elementLikeButton = elementElement.querySelector('.element__like-button'); //Нашли  в HTML-коде элемент кнопки "Лайк".
-  elementDeleteButton.addEventListener('click', handleDeleteButtonClick)
-  elementLikeButton.addEventListener('click', handleLikeButtonClick)
+  elementDeleteButton.addEventListener('click', handleDeleteButtonClick) //Поставили обраотчик событий на кнопку удаления карточки.
+  elementLikeButton.addEventListener('click', handleLikeButtonClick) //Поставили обраотчик событий на кнопку лайка на карточке.
   elementTitle.textContent = item.name;
   elementImg.src = item.link;
   return elementElement;
