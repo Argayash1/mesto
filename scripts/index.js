@@ -19,6 +19,8 @@ const urlInput = popupСardFormElement.querySelector('input[name="url"]');
 //Попап показа изображения
 const popupImageElement = document.querySelector('.popup_type_image');
 const popupImageCloseButtonElement = popupImageElement.querySelector('.popup__close_type_image');
+console.log(popupImageCloseButtonElement)
+debugger
 
 //Массив карточек
 const initialCards = [
@@ -57,22 +59,19 @@ function createElement(item) {
   const elementImg = elementElement.querySelector('.element__image'); //Нашли  в HTML-коде элемент с изображением карточки (пункта/элемента списка).
   const elementDeleteButton = elementElement.querySelector('.element__delete-button'); //Нашли  в HTML-коде элемент кнопки "Удалить".
   const elementLikeButton = elementElement.querySelector('.element__like-button'); //Нашли  в HTML-коде элемент кнопки "Лайк".
-  const popupImagePhoto = elementTemplate.querySelector('.element__image');
+  const popupImagePhotoElement = popupImageElement.querySelector('.popup__photo');
+  const popupImageCaptionElement = popupImageElement.querySelector('.popup__caption');
   elementDeleteButton.addEventListener('click', handleDeleteButtonClick) //Поставили обраотчик событий на кнопку удаления карточки.
   elementLikeButton.addEventListener('click', handleLikeButtonClick) //Поставили обраотчик событий на кнопку лайка на карточке.
   elementTitle.textContent = item.name;
   elementImg.src = item.link;
-  popupImagePhoto.addEventListener('click', handleOpenPopupImage);
-  return elementElement;
-  };
-
-  const handleOpenPopupImage = (e) => {
-    e.target.openPopup(popupImageElement);
-    const popupImagePhotoElement = popupImageElement.querySelector('.popup__photo');
-    const popupImageCaptionElement = popupImageElement.querySelector('.popup__caption');
+  elementImg.addEventListener('click', function() {
     popupImagePhotoElement.src = elementImg.src;
     popupImageCaptionElement.textContent = elementTitle.textContent;
-  }
+    openPopup(popupImageElement);
+  });
+  return elementElement;
+  };
 
 const handleDeleteButtonClick = (e) => {
   e.target.closest('.element').remove()
@@ -150,7 +149,7 @@ popupСardFormElement.addEventListener('submit', CardformSubmitHandler);
 
 
 //Слушатель, который запускает функцию открытия попапа добавления карточки по клику на кнопке add
-popupCardCloseButtonElement.addEventListener('click', function() {
+popupImageCloseButtonElement.addEventListener('click', function() {
   closePopup(popupImageElement);
 }); //Слушатель, который запускает функцию закрытия попапа добавления карточки по клику close
 
