@@ -22,8 +22,6 @@ const urlInput = popupСardFormElement.querySelector('input[name="url"]');
 //Попап показа изображения
 const popupImageElement = document.querySelector('.popup_type_image');
 const popupImageCloseButtonElement = popupImageElement.querySelector('.popup__close_type_image');
-console.log(popupImageCloseButtonElement)
-debugger
 
 const elementsListElement = document.querySelector('.elements-list'); //Нашли  в HTML-коде блок со списком, куда будут добавляться карточки (пункты/элементы списка).   
 const elementTemplate = document.querySelector('#element-template').content.querySelector('.element'); //Нашли в HTML-коде блок с template’ом, а в нём блок с карточкой (пунктом/элементом списка).
