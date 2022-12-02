@@ -38,8 +38,10 @@ function createElement(item) {
   elementLikeButton.addEventListener('click', handleLikeButtonClick) //Поставили обраотчик событий на кнопку лайка на карточке.
   elementTitle.textContent = item.name;
   elementImg.src = item.link;
+  elementImg.alt = item.name;
   elementImg.addEventListener('click', function() {
     popupImagePhotoElement.src = elementImg.src;
+    popupImagePhotoElement.alt = elementTitle.textContent;
     popupImageCaptionElement.textContent = elementTitle.textContent;
     openPopup(popupImageElement);
   });
@@ -119,7 +121,6 @@ popupCardCloseButtonElement.addEventListener('click', function() {
   closePopup(popupCardElement);
 }); //Слушатель, который запускает функцию закрытия попапа добавления карточки по клику close
 popupСardFormElement.addEventListener('submit', CardformSubmitHandler);
-
 
 //Слушатель, который запускает функцию открытия попапа добавления карточки по клику на кнопке add
 popupImageCloseButtonElement.addEventListener('click', function() {
