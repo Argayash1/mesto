@@ -3,7 +3,7 @@ import initialCards from './array.js';
 
 //Попап редактирования профиля
 const popupProfileElement = document.querySelector('.popup_type_profile'); //Нашли попап редактирования профиля в разметке.
-const popupProfileCloseButtonElement = popupProfileElement.querySelector('.popup__close_type_profile'); //Нашли кнопку закрытия попапа редактирования профиля.
+const popupCloseButtons = document.querySelectorAll('.popup__close'); // Нашли все крестики проекта по универсальному селектору
 const popupProfileOpenButtonElement = document.querySelector('.profile-info__edit-button'); // Нашли кнопку открытия попапа редактирования профиля.
 const profileNameElement = document.querySelector('.profile-info__name'); //Нашли строку с именем профиля в блоке профиля.
 const profileProfessionElement = document.querySelector('.profile-info__profession'); //Нашли строку с профессией профиля в блоке профиля.
@@ -14,14 +14,14 @@ const jobInput = popupProfileFormElement.querySelector('input[name="job"]'); //�
 //Попап добавления карточки
 const popupCardElement = document.querySelector('.popup_type_card'); //Нашли попап добавления карточки в разметке.  
 const popupCardOpenButtonElement = document.querySelector('.profile__add-button'); // Нашли кнопку открытия попапа добавления карточки
-const popupCardCloseButtonElement = popupCardElement.querySelector('.popup__close_type_card');
 const popupСardFormElement = popupCardElement.querySelector('.popup__form_type_card');
 const placeInput = popupСardFormElement.querySelector('input[name="place"]');
 const urlInput = popupСardFormElement.querySelector('input[name="url"]');
 
 //Попап показа изображения
 const popupImageElement = document.querySelector('.popup_type_image');
-const popupImageCloseButtonElement = popupImageElement.querySelector('.popup__close_type_image');
+const popupImagePhotoElement = popupImageElement.querySelector('.popup__photo');
+const popupImageCaptionElement = popupImageElement.querySelector('.popup__caption');
 
 const elementsListElement = document.querySelector('.elements-list'); //Нашли  в HTML-коде блок со списком, куда будут добавляться карточки (пункты/элементы списка).   
 const elementTemplate = document.querySelector('#element-template').content.querySelector('.element'); //Нашли в HTML-коде блок с template’ом, а в нём блок с карточкой (пунктом/элементом списка).
@@ -32,8 +32,6 @@ function createElement(item) {
   const elementImg = elementElement.querySelector('.element__image'); //Нашли  в HTML-коде элемент с изображением карточки (пункта/элемента списка).
   const elementDeleteButton = elementElement.querySelector('.element__delete-button'); //Нашли  в HTML-коде элемент кнопки "Удалить".
   const elementLikeButton = elementElement.querySelector('.element__like-button'); //Нашли  в HTML-коде элемент кнопки "Лайк".
-  const popupImagePhotoElement = popupImageElement.querySelector('.popup__photo');
-  const popupImageCaptionElement = popupImageElement.querySelector('.popup__caption');
   elementDeleteButton.addEventListener('click', handleDeleteButtonClick) //Поставили обраотчик событий на кнопку удаления карточки.
   elementLikeButton.addEventListener('click', handleLikeButtonClick) //Поставили обраотчик событий на кнопку лайка на карточке.
   elementTitle.textContent = item.name;
@@ -73,8 +71,6 @@ initialCards.forEach(function(item) {
 
 const openPopup = function (popupElement) {
     popupElement.classList.add('popup_is-opened');
-    nameInput.value = profileNameElement.textContent;
-    jobInput.value = profileProfessionElement.textContent;
 } 
 
 //Создаём функцию добавления класса для попапа, чтобы он открывался и чтобы инпуты в форме попапа 
@@ -85,14 +81,14 @@ const closePopup = function (popup) {
 } //Создаём функцию удаления класса для попапа, чтобы он закрывался
 
 
-function ProfileformSubmitHandler(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileNameElement.textContent = nameInput.value;
   profileProfessionElement.textContent = jobInput.value;
   closePopup(popupProfileElement);
 } //Функция, которая вносит изменения в имя и профессию в блоке профиля, записывая данные которые вписываются в инпуты в попапе
 
-const CardformSubmitHandler = (e) => {
+const handleCardformSubmit = (e) => {
   e.preventDefault()
   const elementElement = {
     name: placeInput.value,
@@ -100,31 +96,28 @@ const CardformSubmitHandler = (e) => {
 }
   renderElement(elementElement, elementsListElement);
   closePopup(popupCardElement);
+  e.target.reset(popupCardElement);
 }
 
-
+popupCloseButtons.forEach((button) => {
+  // находим 1 раз ближайший к крестику попап 
+  const popup = button.closest('.popup');
+  // устанавливаем обработчик закрытия на крестик
+  button.addEventListener('click', () => closePopup(popup));
+});
 
 //Слушатели (обработчики) событий.
 popupProfileOpenButtonElement.addEventListener('click', function() {
   openPopup(popupProfileElement);
+  nameInput.value = profileNameElement.textContent;
+  jobInput.value = profileProfessionElement.textContent;
 }); //Слушатель, который запускает функцию открытия попапа редактирования профиля по клику на кнопке edit
-popupProfileCloseButtonElement.addEventListener('click', function() {
-  closePopup(popupProfileElement);
-}); //Слушатель, который запускает функцию закрытия попапа редактирования профиля по клику на кнопке close
-popupProfileFormElement.addEventListener('submit', ProfileformSubmitHandler); //Слушатель, который ждет когда в форме попапа (formElement) произойдет событие submit
+
+popupProfileFormElement.addEventListener('submit', handleProfileFormSubmit); //Слушатель, который ждет когда в форме попапа (formElement) произойдет событие submit
 // затем запускает функцию, которая сохранит новые записи в инпутах формы в попапе и закроет окно попапа
 
 popupCardOpenButtonElement.addEventListener('click', function() {
   openPopup(popupCardElement);
 });//Слушатель, который запускает функцию открытия попапа добавления карточки по клику на кнопке add
-popupCardCloseButtonElement.addEventListener('click', function() {
-  closePopup(popupCardElement);
-}); //Слушатель, который запускает функцию закрытия попапа добавления карточки по клику close
-popupСardFormElement.addEventListener('submit', CardformSubmitHandler);
 
-//Слушатель, который запускает функцию открытия попапа добавления карточки по клику на кнопке add
-popupImageCloseButtonElement.addEventListener('click', function() {
-  closePopup(popupImageElement);
-}); //Слушатель, который запускает функцию закрытия попапа добавления карточки по клику close
-
-
+popupСardFormElement.addEventListener('submit', handleCardformSubmit);
