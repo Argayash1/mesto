@@ -36,8 +36,10 @@
       <button class="popup__close" type="button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form popup__form_type_profile" name="popupform">
-        <input type="text" id="name" class="popup__input" name="name" placeholder="Имя" autocomplete="off">
-        <input type="text" id="profession" class="popup__input" name="job" placeholder="Профессия" autocomplete="off">
+        <input type="text" id="name" class="popup__input" name="name" placeholder="Имя" autocomplete="off" required minlength="2" maxlength="40">
+        <span class="popup__error_visible" id="name-error"></span>
+        <input type="text" id="profession" class="popup__input" name="job" placeholder="Профессия" autocomplete="off" required minlength="2" maxlength="200">
+        <span class="popup__error_visible" id="job-error"></span>
         <button class="popup__save" type="submit">Сохранить</button>
       </form>
     </div>
@@ -47,8 +49,10 @@
       <button class="popup__close" type="button"></button>
       <h2 class="popup__title">Новое место</h2>
       <form class="popup__form popup__form_type_card" name="popupform">
-        <input type="text" id="title" class="popup__input" name="place" placeholder="Название" autocomplete="off">
-        <input type="text" id="url" class="popup__input" name="url" placeholder="Ссылка на картинку" autocomplete="off">
+        <input type="text" id="title" class="popup__input" name="place" placeholder="Название" autocomplete="off" required>
+        <span class="popup__error_visible" id="place-error"></span>
+        <input type="url" id="url" class="popup__input" name="url" placeholder="Ссылка на картинку" autocomplete="off" required>
+        <span class="popup__error_visible" id="url-error"></span>
         <button class="popup__save" type="submit">Создать</button>
       </form>
     </div>
@@ -71,6 +75,7 @@
     </li>
   </template>
   <script src="./scripts/index.js" type="module"></script>
+  <script src="./scripts/validate.js"></script> 
 </body>
 
 </html>

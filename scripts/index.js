@@ -80,6 +80,12 @@ const closePopup = function (popup) {
     popup.classList.remove('popup_is-opened');
 } //Создаём функцию удаления класса для попапа, чтобы он закрывался
 
+const closePopupByClickOnOverlay = function(event) {
+  if (event.target === event.currentTarget) {
+    closePopup();
+  }
+}
+
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
