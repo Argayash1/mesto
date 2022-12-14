@@ -9,7 +9,8 @@ const profileNameElement = document.querySelector('.profile-info__name'); //На
 const profileProfessionElement = document.querySelector('.profile-info__profession'); //Нашли строку с профессией профиля в блоке профиля.
 const popupProfileFormElement = popupProfileElement.querySelector('.popup__form_type_profile'); //Нашли форму в попапе редактирования профиля
 const nameInput = popupProfileFormElement.querySelector('input[name="name"]'); //Нашли инпут для имени в форме
-const jobInput = popupProfileFormElement.querySelector('input[name="job"]'); //Нашли инпут для профессии в форме 
+const jobInput = popupProfileFormElement.querySelector('input[name="job"]'); //Нашли инпут для профессии в форме
+const popupOverlays = document.querySelectorAll('.popup_is-opened'); //Нашли оверлеи для всех попапов 
 
 //Попап добавления карточки
 const popupCardElement = document.querySelector('.popup_type_card'); //Нашли попап добавления карточки в разметке.  
@@ -68,31 +69,41 @@ initialCards.forEach(function(item) {
   renderElement(item, elementsListElement)
 })
 
-
+//Создаём функцию добавления класса для попапа, для того, чтобы он открывался
 const openPopup = function (popupElement) {
     popupElement.classList.add('popup_is-opened');
+    document.addEventListener('keyup', handleKeyUp)
 } 
 
-//Создаём функцию добавления класса для попапа, чтобы он открывался и чтобы инпуты в форме попапа 
-  //приняли текстовые значения из блока профиля для имени и професии
-
+//Создаём функцию удаления класса для попапа, чтобы он закрывался
 const closePopup = function (popup) {
     popup.classList.remove('popup_is-opened');
-} //Создаём функцию удаления класса для попапа, чтобы он закрывался
+    document.removeEventListener('keyup', handleKeyUp)
+} 
 
-const closePopupByClickOnOverlay = function(event) {
-  if (event.target === event.currentTarget) {
-    closePopup();
+//Создаём функцию закрытия попапа по клику на оверлей
+//const closePopupByClickOnOverlay = function(event) {
+  //if (event.target === event.currentTarget) {
+    //closePopup();
+  //}
+//}
+
+//Функция закрытия попапа по нажатию кнопки Escape
+const handleKeyUp = (e) => {
+  if(e.key === 'Escape') {
+    const openModal = document.querySelector('.popup_is-opened');
+    closePopup(openModal);
   }
+
 }
 
-
+//Функция, которая вносит изменения в имя и профессию в блоке профиля, записывая данные которые вписываются в инпуты в попапе
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileNameElement.textContent = nameInput.value;
   profileProfessionElement.textContent = jobInput.value;
   closePopup(popupProfileElement);
-} //Функция, которая вносит изменения в имя и профессию в блоке профиля, записывая данные которые вписываются в инпуты в попапе
+} 
 
 const handleCardformSubmit = (e) => {
   e.preventDefault()
@@ -105,6 +116,13 @@ const handleCardformSubmit = (e) => {
   e.target.reset(popupCardElement);
 }
 
+//Создаём функцию закрытия попапов по клику на оверлей
+popupOverlays.forEach((overlay) => {
+  const popup = overlay.closest('.popup');
+  overlay.addEventListener('click', () => closePopup(popup));
+})
+
+//Создаём универсальную функцию закрытия попапов
 popupCloseButtons.forEach((button) => {
   // находим 1 раз ближайший к крестику попап 
   const popup = button.closest('.popup');
@@ -113,12 +131,13 @@ popupCloseButtons.forEach((button) => {
 });
 
 //Слушатели (обработчики) событий.
+//Слушатель, который запускает функцию открытия попапа редактирования профиля по клику на кнопке edit и делает так,  
+//чтобы инпуты в форме попапа приняли текстовые значения из блока профиля для имени и професии
 popupProfileOpenButtonElement.addEventListener('click', function() {
   openPopup(popupProfileElement);
   nameInput.value = profileNameElement.textContent;
   jobInput.value = profileProfessionElement.textContent;
-}); //Слушатель, который запускает функцию открытия попапа редактирования профиля по клику на кнопке edit
-
+}); 
 popupProfileFormElement.addEventListener('submit', handleProfileFormSubmit); //Слушатель, который ждет когда в форме попапа (formElement) произойдет событие submit
 // затем запускает функцию, которая сохранит новые записи в инпутах формы в попапе и закроет окно попапа
 
@@ -127,3 +146,7 @@ popupCardOpenButtonElement.addEventListener('click', function() {
 });//Слушатель, который запускает функцию открытия попапа добавления карточки по клику на кнопке add
 
 popupСardFormElement.addEventListener('submit', handleCardformSubmit);
+
+//popupOverlays.addEventListener('click', closePopupByClickOnOverlay);
+
+
