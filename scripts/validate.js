@@ -15,16 +15,16 @@ const checkInputValidity = (input, config) => {
 }
 
 //Создаём функцию активирования (раздизэйблить) и деактивирования (задизэйблить) кнопки 
-const toggleButton = (inputs, button) => { // toggleButton()
-  const isFormValid = inputs.every(input => input.validity.valid);
+const toggleButton = (config, inputs, button) => { // toggleButton()
+    const isFormValid = inputs.every(input => input.validity.valid)
 
-  if (isFormValid) {
-      button.classList.remove(config.inactiveButtonClass);
-      button.disabled = '';
-  } else {
-      button.classList.add(config.inactiveButtonClass);
-      button.disabled = 'disabled';
-  }
+    if(isFormValid) {
+        button.classList.remove(config.inactiveButtonClass) // 
+        button.disabled = ''
+    } else {
+        button.classList.add(config.inactiveButtonClass)
+        button.disabled = 'disabled'
+    }
 }
 
 
@@ -39,14 +39,13 @@ const enableValidation = (config) => {
       const button = form.querySelector(submitButtonSelector);
   
       form.addEventListener('submit', (e) => {
-          e.preventDefault()
+          e.preventDefault();
       })
   
       inputs.forEach(input => {
           input.addEventListener('input', () => {
-              checkInputValidity(input, restConfig)
-              
-              toggleButton(restConfig, inputs, button)
+              checkInputValidity(input, restConfig);
+              toggleButton(restConfig, inputs, button);
           })
       })
   })

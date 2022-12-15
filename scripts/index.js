@@ -117,9 +117,17 @@ const handleCardformSubmit = (e) => {
 }
 
 //Создаём функцию закрытия попапов по клику на оверлей
-popupOverlays.forEach((overlay) => {
-  const popup = overlay.closest('.popup');
-  overlay.addEventListener('click', () => closePopup(popup));
+//popupOverlays.forEach((overlay) => {
+  //const popup = overlay.closest('.popup');
+  //overlay.addEventListener('click', () => closePopup(popup));
+//})
+
+//Создаём функцию закрытия попапа редактирования профиля по клику на оверлей
+popupProfileElement.addEventListener('click', (evt) => {
+  if (e.target === e.currentTarget) {
+    closePopup(popupProfileElement);
+  //}
+}
 })
 
 //Создаём универсальную функцию закрытия попапов
