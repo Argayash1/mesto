@@ -105,7 +105,7 @@ function handleProfileFormSubmit(evt) {
   closePopup(popupProfileElement);
 } 
 
-const handleCardformSubmit = (e) => {
+const handleCardFormSubmit = (e) => {
   e.preventDefault()
   const elementElement = {
     name: placeInput.value,
@@ -122,13 +122,6 @@ const handleCardformSubmit = (e) => {
   //overlay.addEventListener('click', () => closePopup(popup));
 //})
 
-//Создаём функцию закрытия попапа редактирования профиля по клику на оверлей
-popupProfileElement.addEventListener('click', (evt) => {
-  if (e.target === e.currentTarget) {
-    closePopup(popupProfileElement);
-  //}
-}
-})
 
 //Создаём универсальную функцию закрытия попапов
 popupCloseButtons.forEach((button) => {
@@ -146,6 +139,14 @@ popupProfileOpenButtonElement.addEventListener('click', function() {
   nameInput.value = profileNameElement.textContent;
   jobInput.value = profileProfessionElement.textContent;
 }); 
+
+//Слушатель,который закрывает попап редактирования профиля по клику на оверлей
+popupProfileElement.addEventListener('click', (e) => {
+  if (!e.target.closest('popup__container')) {
+    closePopup(popupProfileElement);
+  }
+})
+
 popupProfileFormElement.addEventListener('submit', handleProfileFormSubmit); //Слушатель, который ждет когда в форме попапа (formElement) произойдет событие submit
 // затем запускает функцию, которая сохранит новые записи в инпутах формы в попапе и закроет окно попапа
 
@@ -153,8 +154,22 @@ popupCardOpenButtonElement.addEventListener('click', function() {
   openPopup(popupCardElement);
 });//Слушатель, который запускает функцию открытия попапа добавления карточки по клику на кнопке add
 
-popupСardFormElement.addEventListener('submit', handleCardformSubmit);
+//Слушатель,который закрывает попап добавления карточки по клику на оверлей
+popupCardElement.addEventListener('click', (e) => {
+  if (!e.target.closest('popup__container')) {
+    closePopup(popupCardElement);
+  }
+})
+
+popupСardFormElement.addEventListener('submit', handleCardFormSubmit);
 
 //popupOverlays.addEventListener('click', closePopupByClickOnOverlay);
+
+//Слушатель,который закрывает попап просмотра картинки по клику на оверлей
+popupImageElement.addEventListener('click', (e) => {
+  if (!e.target.closest('popup__container')) {
+    closePopup(popupImageElement);
+  }
+})
 
 
