@@ -154,7 +154,7 @@ popupCardOpenButtonElement.addEventListener('click', function() {
   openPopup(popupCardElement);
 });//Слушатель, который запускает функцию открытия попапа добавления карточки по клику на кнопке add
 
-//Слушатель,который закрывает попап добавления карточки по клику на оверлей
+//Слушатель, который закрывает попап добавления карточки по клику на оверлей
 popupCardElement.addEventListener('click', (e) => {
   if (!e.target.closest('popup__container')) {
     closePopup(popupCardElement);
@@ -165,7 +165,7 @@ popupСardFormElement.addEventListener('submit', handleCardFormSubmit);
 
 //popupOverlays.addEventListener('click', closePopupByClickOnOverlay);
 
-//Слушатель,который закрывает попап просмотра картинки по клику на оверлей
+//Слушатель, который закрывает попап просмотра картинки по клику на оверлей
 popupImageElement.addEventListener('click', (e) => {
   if (!e.target.closest('popup__container')) {
     closePopup(popupImageElement);
