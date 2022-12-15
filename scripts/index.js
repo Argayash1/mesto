@@ -140,9 +140,9 @@ popupProfileOpenButtonElement.addEventListener('click', function() {
   jobInput.value = profileProfessionElement.textContent;
 }); 
 
-//Слушатель,который закрывает попап редактирования профиля по клику на оверлей
+//Слушатель, который закрывает попап редактирования профиля по клику на оверлей
 popupProfileElement.addEventListener('click', (e) => {
-  if (!e.target.closest('popup__container')) {
+  if(!e.target.closest('.popup__container')) {
     closePopup(popupProfileElement);
   }
 })
@@ -156,7 +156,7 @@ popupCardOpenButtonElement.addEventListener('click', function() {
 
 //Слушатель, который закрывает попап добавления карточки по клику на оверлей
 popupCardElement.addEventListener('click', (e) => {
-  if (!e.target.closest('popup__container')) {
+  if(!e.target.closest('.popup__container')) {
     closePopup(popupCardElement);
   }
 })
@@ -167,7 +167,7 @@ popupСardFormElement.addEventListener('submit', handleCardFormSubmit);
 
 //Слушатель, который закрывает попап просмотра картинки по клику на оверлей
 popupImageElement.addEventListener('click', (e) => {
-  if (!e.target.closest('popup__container')) {
+  if (!e.target.closest('.popup__container')) {
     closePopup(popupImageElement);
   }
 })
