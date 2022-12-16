@@ -13,19 +13,3 @@
   white-space: nowrap;
   overflow: hidden;
 }
-
-.popup__input:nth-child(2) {
-  margin-bottom: 470px;
-}
-
-@media screen and (max-width: 740px) {
-  .popup__input{
-    margin-bottom: 28px;
-  }
-}
-
-@media screen and (max-width: 740px) {
-  .popup__input:nth-child(2) {
-    margin-bottom: 45px;
-  }
-}
