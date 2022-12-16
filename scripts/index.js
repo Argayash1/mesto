@@ -39,9 +39,9 @@ function createElement(item) {
   elementImg.src = item.link;
   elementImg.alt = item.name;
   elementImg.addEventListener('click', function() {
-    popupImagePhotoElement.src = elementImg.src;
-    popupImagePhotoElement.alt = elementTitle.textContent;
-    popupImageCaptionElement.textContent = elementTitle.textContent;
+    popupImagePhotoElement.src = item.link;
+    popupImagePhotoElement.alt = item.name;
+    popupImageCaptionElement.textContent = item.name;
     openPopup(popupImageElement);
   });
   return elementElement;
@@ -113,7 +113,9 @@ const handleCardFormSubmit = (e) => {
 }
   renderElement(elementElement, elementsListElement);
   closePopup(popupCardElement);
-  e.target.reset(popupCardElement);
+  e.target.reset();
+  e.submitter.classList.add('popup__save_disabled');
+  e.submitter.setAttribute('disabled', true);
 }
 
 //Создаём функцию закрытия попапов по клику на оверлей
