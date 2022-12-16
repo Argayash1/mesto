@@ -15,7 +15,7 @@
   opacity: 1;
   transition: opacity .5s linear;
   padding: 12px 0 16px;
-  margin: 11px 0 0;
+  margin: 12px 0 0;
   word-wrap: break-word;
 }
 
@@ -29,5 +29,6 @@
     font-size: 14px;
     line-height: 17px;
     padding: 14.5px 0 14.5px;
+    margin: 11px 0 0;
   }
 }
