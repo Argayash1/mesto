@@ -1,5 +1,8 @@
 //Импорт массива изображений 
 import initialCards from './array.js';
+import config from './config.js';
+import {Card} from './card.js';
+import {FormValidator} from './FormValidator.js';
 
 //Попап редактирования профиля
 const popupProfileElement = document.querySelector('.popup_type_profile'); //Нашли попап редактирования профиля в разметке.
@@ -27,37 +30,25 @@ const popupImageCaptionElement = popupImageElement.querySelector('.popup__captio
 const elementsListElement = document.querySelector('.elements-list'); //Нашли  в HTML-коде блок со списком, куда будут добавляться карточки (пункты/элементы списка).   
 const elementTemplate = document.querySelector('#element-template').content.querySelector('.element'); //Нашли в HTML-коде блок с template’ом, а в нём блок с карточкой (пунктом/элементом списка).
 
-function createElement(item) {
-  const elementElement = elementTemplate.cloneNode(true); //Записали template в переменную elementElement и клонировали его.
-  const elementTitle = elementElement.querySelector('.element__title'); //Нашли  в HTML-коде элемент с заголовком карточки (пункта/элемента списка).
-  const elementImg = elementElement.querySelector('.element__image'); //Нашли  в HTML-коде элемент с изображением карточки (пункта/элемента списка).
-  const elementDeleteButton = elementElement.querySelector('.element__delete-button'); //Нашли  в HTML-коде элемент кнопки "Удалить".
-  const elementLikeButton = elementElement.querySelector('.element__like-button'); //Нашли  в HTML-коде элемент кнопки "Лайк".
-  elementDeleteButton.addEventListener('click', handleDeleteButtonClick) //Поставили обраотчик событий на кнопку удаления карточки.
-  elementLikeButton.addEventListener('click', handleLikeButtonClick) //Поставили обраотчик событий на кнопку лайка на карточке.
-  elementTitle.textContent = item.name;
-  elementImg.src = item.link;
-  elementImg.alt = item.name;
-  elementImg.addEventListener('click', function() {
-    popupImagePhotoElement.src = item.link;
-    popupImagePhotoElement.alt = item.name;
-    popupImageCaptionElement.textContent = item.name;
-    openPopup(popupImageElement);
-  });
-  return elementElement;
-  };
 
-const handleDeleteButtonClick = (e) => {
-  e.target.closest('.element').remove()
+
+//Создаём функцию открытия попапа показа изображения по клике на картинку карточки
+function handleOpenPopupImage(name, link) {
+  popupImagePhotoElement.src = link;
+  popupImagePhotoElement.alt = name;
+  popupImageCaptionElement.textContent = name;
+  openPopup(popupImageElement);
 }
 
-const handleLikeButtonClick = (e) => {
-  e.target.classList.toggle('element__like-button_active');
-}
 
 const renderElement = (item, wrapElement) => {
-  const element = createElement(item)
-  wrapElement.prepend(element);
+  // Создадим экземпляр карточки
+  const card = new Card(item, '#element-template', handleOpenPopupImage);
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateCard();
+
+  // Добавляем в DOM
+  wrapElement.prepend(cardElement);
 }
 
 //Обработка массива initialCards методом forEach, благодаря которому к каждому элементу массива применяется функция 
@@ -65,52 +56,52 @@ const renderElement = (item, wrapElement) => {
 //туда полями name и link, затем возвращает этот пункт (элемент) списка обратно в функцию renderElement и вставляет этот пункт (элемент) списка 
 //непосредственно в HTML-код. А, благодаря применению к каждому элементу массива initialCards метода forEach в HTML-коде создаётся 6 пунктов (элементов) 
 // списка, соответственно количеству элементов в массиве (их там 6).  товоснове каждого элемента массива отрисовывает пункт(элемент) списка е  
-initialCards.forEach(function(item) {
+initialCards.forEach(function (item) {
   renderElement(item, elementsListElement)
 })
 
-//Создаём функцию добавления класса для попапа, для того, чтобы он открывался
+
+// Создаём функцию добавления класса для попапа, для того, чтобы он открывался
 const openPopup = function (popupElement) {
-    popupElement.classList.add('popup_is-opened');
-    document.addEventListener('keyup', handleKeyUp)
-} 
+  popupElement.classList.add('popup_is-opened');
+  document.addEventListener('keyup', handleKeyUp)
+}
 
 //Создаём функцию удаления класса для попапа, чтобы он закрывался
 const closePopup = function (popup) {
-    popup.classList.remove('popup_is-opened');
-    document.removeEventListener('keyup', handleKeyUp)
-} 
+  popup.classList.remove('popup_is-opened');
+  document.removeEventListener('keyup', handleKeyUp)
+}
 
-//Создаём функцию закрытия попапа по клику на оверлей
-//const closePopupByClickOnOverlay = function(event) {
-  //if (event.target === event.currentTarget) {
-    //closePopup();
-  //}
+// Создаём функцию закрытия попапа по клику на оверлей
+// const closePopupByClickOnOverlay = function(event) {
+//if (event.target === event.currentTarget) {
+//closePopup();
+//}
 //}
 
-//Функция закрытия попапа по нажатию кнопки Escape
+// Функция закрытия попапа по нажатию кнопки Escape
 const handleKeyUp = (e) => {
-  if(e.key === 'Escape') {
+  if (e.key === 'Escape') {
     const openModal = document.querySelector('.popup_is-opened');
     closePopup(openModal);
   }
-
 }
 
-//Функция, которая вносит изменения в имя и профессию в блоке профиля, записывая данные которые вписываются в инпуты в попапе
+// Функция, которая вносит изменения в имя и профессию в блоке профиля, записывая данные которые вписываются в инпуты в попапе
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileNameElement.textContent = nameInput.value;
   profileProfessionElement.textContent = jobInput.value;
   closePopup(popupProfileElement);
-} 
+}
 
 const handleCardFormSubmit = (e) => {
   e.preventDefault()
   const elementElement = {
     name: placeInput.value,
     link: urlInput.value
-}
+  }
   renderElement(elementElement, elementsListElement);
   closePopup(popupCardElement);
   e.target.reset();
@@ -120,8 +111,8 @@ const handleCardFormSubmit = (e) => {
 
 //Создаём функцию закрытия попапов по клику на оверлей
 //popupOverlays.forEach((overlay) => {
-  //const popup = overlay.closest('.popup');
-  //overlay.addEventListener('click', () => closePopup(popup));
+//const popup = overlay.closest('.popup');
+//overlay.addEventListener('click', () => closePopup(popup));
 //})
 
 
@@ -136,15 +127,15 @@ popupCloseButtons.forEach((button) => {
 //Слушатели (обработчики) событий.
 //Слушатель, который запускает функцию открытия попапа редактирования профиля по клику на кнопке edit и делает так,  
 //чтобы инпуты в форме попапа приняли текстовые значения из блока профиля для имени и професии
-popupProfileOpenButtonElement.addEventListener('click', function() {
+popupProfileOpenButtonElement.addEventListener('click', function () {
   openPopup(popupProfileElement);
   nameInput.value = profileNameElement.textContent;
   jobInput.value = profileProfessionElement.textContent;
-}); 
+});
 
 //Слушатель, который ззапускает функцию закрытия попапа редактирования профиля по клику на оверлей
 popupProfileElement.addEventListener('click', (e) => {
-  if(!e.target.closest('.popup__container')) {
+  if (!e.target.closest('.popup__container')) {
     closePopup(popupProfileElement);
   }
 })
@@ -152,13 +143,13 @@ popupProfileElement.addEventListener('click', (e) => {
 popupProfileFormElement.addEventListener('submit', handleProfileFormSubmit); //Слушатель, который ждет когда в форме попапа (formElement) произойдет событие submit
 // затем запускает функцию, которая сохранит новые записи в инпутах формы в попапе и закроет окно попапа
 
-popupCardOpenButtonElement.addEventListener('click', function() {
+popupCardOpenButtonElement.addEventListener('click', function () {
   openPopup(popupCardElement);
 });//Слушатель, который запускает функцию открытия попапа добавления карточки по клику на кнопке add
 
 //Слушатель, который запускает функцию закрытия попапа добавления карточки по клику на оверлей
 popupCardElement.addEventListener('click', (e) => {
-  if(!e.target.closest('.popup__container')) {
+  if (!e.target.closest('.popup__container')) {
     closePopup(popupCardElement);
   }
 })
@@ -173,5 +164,11 @@ popupImageElement.addEventListener('click', (e) => {
     closePopup(popupImageElement);
   }
 })
+
+//Запускаем на каждую форму валидацию
+document.querySelectorAll(config.formSelector).forEach(form => {
+  const formValidator = new FormValidator(config, form);
+  formValidator.enableValidation();
+});
 
 
