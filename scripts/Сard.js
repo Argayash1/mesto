@@ -58,6 +58,7 @@ class Card {
   // добавили метод _handleDeleteButtonClick
   _handleDeleteButtonClick() {
     this._element.remove();
+    this._element = null;
   }
 
 }

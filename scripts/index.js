@@ -1,7 +1,7 @@
 //Импорт массива изображений 
-import initialCards from './array.js';
+import initialCards from './initialCards.js';
 import config from './config.js';
-import {Card} from './card.js';
+import {Card} from './Сard.js';
 import {FormValidator} from './FormValidator.js';
 
 //Попап редактирования профиля
@@ -124,6 +124,14 @@ popupCloseButtons.forEach((button) => {
   button.addEventListener('click', () => closePopup(popup));
 });
 
+//Создаём функцию закрытия попапа при клике на оверлей
+const closePopupByClickOnOverlay = (e) => {
+  if (e.target.classList.contains('popup_is-opened')) {
+    const openedPopup = document.querySelector('.popup_is-opened');
+    closePopup(openedPopup);
+  }
+}
+
 //Слушатели (обработчики) событий.
 //Слушатель, который запускает функцию открытия попапа редактирования профиля по клику на кнопке edit и делает так,  
 //чтобы инпуты в форме попапа приняли текстовые значения из блока профиля для имени и професии
@@ -134,11 +142,7 @@ popupProfileOpenButtonElement.addEventListener('click', function () {
 });
 
 //Слушатель, который ззапускает функцию закрытия попапа редактирования профиля по клику на оверлей
-popupProfileElement.addEventListener('click', (e) => {
-  if (!e.target.closest('.popup__container')) {
-    closePopup(popupProfileElement);
-  }
-})
+popupProfileElement.addEventListener('click', closePopupByClickOnOverlay);
 
 popupProfileFormElement.addEventListener('submit', handleProfileFormSubmit); //Слушатель, который ждет когда в форме попапа (formElement) произойдет событие submit
 // затем запускает функцию, которая сохранит новые записи в инпутах формы в попапе и закроет окно попапа
@@ -148,27 +152,22 @@ popupCardOpenButtonElement.addEventListener('click', function () {
 });//Слушатель, который запускает функцию открытия попапа добавления карточки по клику на кнопке add
 
 //Слушатель, который запускает функцию закрытия попапа добавления карточки по клику на оверлей
-popupCardElement.addEventListener('click', (e) => {
-  if (!e.target.closest('.popup__container')) {
-    closePopup(popupCardElement);
-  }
-})
+popupCardElement.addEventListener('click', closePopupByClickOnOverlay);
 
 popupСardFormElement.addEventListener('submit', handleCardFormSubmit);
 
 //popupOverlays.addEventListener('click', closePopupByClickOnOverlay);
 
 //Слушатель, который запускает функцию закрытия попапа просмотра картинки по клику на оверлей
-popupImageElement.addEventListener('click', (e) => {
-  if (!e.target.closest('.popup__container')) {
-    closePopup(popupImageElement);
-  }
-})
+popupImageElement.addEventListener('click', closePopupByClickOnOverlay);
 
-//Запускаем на каждую форму валидацию
-document.querySelectorAll(config.formSelector).forEach(form => {
-  const formValidator = new FormValidator(config, form);
-  formValidator.enableValidation();
-});
+//Запускаем валидацию на форму из попапа профиля
+const popupProfileFormValidator = new FormValidator(config, popupProfileFormElement);
+popupProfileFormValidator.enableValidation();
+
+//Запускаем валидацию на форму из попапа добавления карточки
+const popupCardFormValidator = new FormValidator(config, popupСardFormElement);
+popupCardFormValidator.enableValidation();
+
 
 

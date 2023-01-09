@@ -6,6 +6,8 @@ class FormValidator {
         this._inputErrorClass = config.inputErrorClass;
         this._errorClass = config.errorClass;
         this._formElement = formElement;
+        this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+        this._submitButton = this._formElement.querySelector(this._submitButtonSelector);
     };
 
     //Создаём функцию показа ошибки в инпуте (в поле ввода)
@@ -35,12 +37,10 @@ class FormValidator {
 
     //Создаём функцию установки слушателей(обработчиков) на все инпуты
     _setEventListeners() {
-        const inputs = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-        const button = this._formElement.querySelector(this._submitButtonSelector);
-        inputs.forEach(input => {
+        this._inputList.forEach(input => {
             input.addEventListener('input', () => {
                 this._checkInputValidity(input);
-                this._toggleButtonState(inputs, button);
+                this._toggleButtonState(this._inputList, this._submitButton);
             });
         });
     };
