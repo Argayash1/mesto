@@ -3,6 +3,9 @@ import initialCards from './initialCards.js';
 import config from './config.js';
 import {Card} from './Сard.js';
 import {FormValidator} from './FormValidator.js';
+import {Section} from './Section.js';
+import {PopupWithImage} from './PopupWithImage.js';
+import {PopupWithForm} from './PopupWithForm.js';
 
 //Попап редактирования профиля
 const popupProfileElement = document.querySelector('.popup_type_profile'); //Нашли попап редактирования профиля в разметке.
@@ -40,53 +43,24 @@ function handleOpenPopupImage(name, link) {
   openPopup(popupImageElement);
 }
 
-
-const renderElement = (item, wrapElement) => {
-  // Создадим экземпляр карточки
+//Вставка карточек из импортированного массива initialCardsб который содержит объекты с полями name и link
+const cardList = new Section({
+  data: initialCards,
+  renderer: (item) => {
+    // Создадим экземпляр карточки
   const card = new Card(item, '#element-template', handleOpenPopupImage);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
+  // С помощью публичного метода addItem класса Section добавляем готовый DOM-элемент карточки в контейнер
+  cardList.addItem(cardElement);
+    },
+  },
+  '.elements-list'
+);
 
-  // Добавляем в DOM
-  wrapElement.prepend(cardElement);
-}
+// С помощью публичного метода renderItems класса Section добавляем готовые DOM-элементы всех карточек в контейнер
+cardList.renderItems();
 
-//Обработка массива initialCards методом forEach, благодаря которому к каждому элементу массива применяется функция 
-//renderElement. Функция renderElement с помощью функции createElement создаёт (отрисовывает) пункт (элемент) списка с уже вставленными  
-//туда полями name и link, затем возвращает этот пункт (элемент) списка обратно в функцию renderElement и вставляет этот пункт (элемент) списка 
-//непосредственно в HTML-код. А, благодаря применению к каждому элементу массива initialCards метода forEach в HTML-коде создаётся 6 пунктов (элементов) 
-// списка, соответственно количеству элементов в массиве (их там 6).  товоснове каждого элемента массива отрисовывает пункт(элемент) списка е  
-initialCards.forEach(function (item) {
-  renderElement(item, elementsListElement)
-})
-
-
-// Создаём функцию добавления класса для попапа, для того, чтобы он открывался
-const openPopup = function (popupElement) {
-  popupElement.classList.add('popup_is-opened');
-  document.addEventListener('keyup', handleKeyUp)
-}
-
-//Создаём функцию удаления класса для попапа, чтобы он закрывался
-const closePopup = function (popup) {
-  popup.classList.remove('popup_is-opened');
-  document.removeEventListener('keyup', handleKeyUp)
-}
-
-// Создаём функцию закрытия попапа по клику на оверлей
-// const closePopupByClickOnOverlay = function(event) {
-//if (event.target === event.currentTarget) {
-//closePopup();
-//}
-//}
-
-// Функция закрытия попапа по нажатию кнопки Escape
-const handleKeyUp = (e) => {
-  if (e.key === 'Escape') {
-    const openModal = document.querySelector('.popup_is-opened');
-    closePopup(openModal);
-  }
-}
 
 // Функция, которая вносит изменения в имя и профессию в блоке профиля, записывая данные которые вписываются в инпуты в попапе
 function handleProfileFormSubmit(evt) {
@@ -109,13 +83,6 @@ const handleCardFormSubmit = (e) => {
   e.submitter.setAttribute('disabled', true);
 }
 
-//Создаём функцию закрытия попапов по клику на оверлей
-//popupOverlays.forEach((overlay) => {
-//const popup = overlay.closest('.popup');
-//overlay.addEventListener('click', () => closePopup(popup));
-//})
-
-
 //Создаём универсальную функцию закрытия попапов
 popupCloseButtons.forEach((button) => {
   // находим 1 раз ближайший к крестику попап 
@@ -123,14 +90,6 @@ popupCloseButtons.forEach((button) => {
   // устанавливаем обработчик закрытия на крестик
   button.addEventListener('click', () => closePopup(popup));
 });
-
-//Создаём функцию закрытия попапа при клике на оверлей
-const closePopupByClickOnOverlay = (e) => {
-  if (e.target.classList.contains('popup_is-opened')) {
-    const openedPopup = document.querySelector('.popup_is-opened');
-    closePopup(openedPopup);
-  }
-}
 
 //Слушатели (обработчики) событий.
 //Слушатель, который запускает функцию открытия попапа редактирования профиля по клику на кнопке edit и делает так,  

@@ -1,0 +1,19 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "Этот проект рассказывает о любимых местах, городах, которые посетил человек.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Argayash1/mesto.git"
+  },
+  "author": "Yakov Zilberman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Argayash1/mesto/issues"
+  },
+  "homepage": "https://github.com/Argayash1/mesto#readme"
+}
