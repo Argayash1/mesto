@@ -4,16 +4,18 @@ class PopupWithForm extends Popup {
     constructor(popupSelector, handleFormSubmit) {
         super(popupSelector);
         this._handleFormSubmit = handleFormSubmit;
+        // достаём (находим) элемент формы для того, чтобы в методе close сбросить все инпуты формы (сбросить форму)
+        this._form = this._popupElement.querySelector('.popup__form');
+        // достаём (находим) все элементы полей
+        this._inputList = this._popupElement.querySelectorAll('.popup__input');
     }
 
     _getInputValues() {
-        // достаём (находим) все элементы полей
-        this._inputList = this._popupElement.querySelectorAll('.popup__input');
-
         // создаём пустой объект
         this._formValues = {};
 
-        // добавляем в этот объект значения всех полей
+        // добавляем в этот объект значения всех полей (инпутов), обойдя все поля (инпуты) по свойству (полю) name,
+        // то есть в объекте this._formValues  
         this._inputList.forEach(input => {
             this._formValues[input.name] = input.value;
         });
@@ -24,7 +26,7 @@ class PopupWithForm extends Popup {
 
     setEventListeners() {
         super.setEventListeners();
-        this._popupElement.addEventListener('submit', (e) => {
+        this._form.addEventListener('submit', (e) => {
             e.preventDefault();
         
             // добавим вызов функции _handleFormSubmit
@@ -35,7 +37,7 @@ class PopupWithForm extends Popup {
 
     close() {
         super.close();
-        this._popupElement.reset();
+        this._form.reset();
     }
 }
 
