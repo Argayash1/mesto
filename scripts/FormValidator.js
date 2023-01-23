@@ -37,6 +37,7 @@ class FormValidator {
 
     //Создаём функцию установки слушателей(обработчиков) на все инпуты
     _setEventListeners() {
+        this._toggleButtonState(this._inputList, this._submitButton);
         this._inputList.forEach(input => {
             input.addEventListener('input', () => {
                 this._checkInputValidity(input);
