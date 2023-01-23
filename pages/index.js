@@ -1,12 +1,12 @@
 //Импорт массива изображений 
-import initialCards from './initialCards.js';
-import config from './config.js';
-import {Card} from './Сard.js';
-import {FormValidator} from './FormValidator.js';
-import {Section} from './Section.js';
-import {PopupWithImage} from './PopupWithImage.js';
-import {PopupWithForm} from './PopupWithForm.js';
-import {UserInfo} from './UserInfo.js'
+import initialCards from '../scripts/initialCards.js';
+import config from '../scripts/config.js';
+import {Card} from '../components/Сard.js';
+import {FormValidator} from '../components/FormValidator.js';
+import {Section} from '../components/Section.js';
+import {PopupWithImage} from '../components/PopupWithImage.js';
+import {PopupWithForm} from '../components/PopupWithForm.js';
+import {UserInfo} from '../components/UserInfo.js';
 
 //Попап редактирования профиля
 const popupProfileElement = document.querySelector('.popup_type_profile'); //Нашли попап редактирования профиля в разметке.
