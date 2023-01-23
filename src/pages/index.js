@@ -7,6 +7,7 @@ import {Section} from '../components/Section.js';
 import {PopupWithImage} from '../components/PopupWithImage.js';
 import {PopupWithForm} from '../components/PopupWithForm.js';
 import {UserInfo} from '../components/UserInfo.js';
+import './index.css';
 
 // Попап редактирования профиля
 const popupProfileElement = document.querySelector('.popup_type_profile'); //Нашли попап редактирования профиля в разметке.
@@ -71,8 +72,7 @@ const handleCardFormSubmit = (formValues) => {
   const newCard = createCard(cardItem);
   cardList.addItem(newCard);
   popupCard.close();
-  popupCardElementSubmitButton.classList.add('popup__save_disabled');
-  popupCardElementSubmitButton.setAttribute('disabled', true);
+  popupCardFormValidator.disableSubmitButton();
 }
 
 // Создаём новый экземпляр класса UserInfo 

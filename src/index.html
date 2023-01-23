@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Mesto</title>
+</head>
+
+<body class="page">
+  <header class="header">
+    <img class="header__logo" src="<%=require('./images/header-logo.svg')%>" alt="Логотип">
+  </header>
+  <main class="content page__content">
+    <section class="profile">
+      <div class="profile__items">
+        <img class="profile__avatar" src="<%=require('./images/profile-cousteau.jpg')%>" alt="Аватар пользователя">
+        <div class="profile-info">
+          <h1 class="profile-info__name">Жак-Ив Кусто</h1>
+          <button class="profile-info__edit-button" type="button"></button>
+          <p class="profile-info__profession">Исследователь океана</p>
+        </div>
+      </div>
+      <button class="profile__add-button" type="button"></button>
+    </section>
+    <section class="elements content__elements">
+      <ul class="elements-list"></ul>
+    </section>
+  </main>
+  <footer class="footer">
+    <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+  </footer>
+  <section class="popup popup_type_profile">
+    <div class="popup__container">
+      <button class="popup__close" type="button"></button>
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form class="popup__form popup__form_type_profile" name="profile-popupform" novalidate>
+        <input type="text" id="name" class="popup__input" name="name" placeholder="Имя" autocomplete="off" required minlength="2" maxlength="40">
+        <span class="popup__error" id="name-error"></span>
+        <input type="text" id="profession" class="popup__input" name="job" placeholder="Профессия" autocomplete="off" required minlength="2" maxlength="200">
+        <span class="popup__error" id="profession-error"></span>
+        <button class="popup__save" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </section>
+  <section class="popup popup_type_card">
+    <div class="popup__container">
+      <button class="popup__close" type="button"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__form popup__form_type_card" name="card-popupform" novalidate>
+        <input type="text" id="title" class="popup__input" name="place" placeholder="Название" autocomplete="off" required minlength="2" maxlength="30">
+        <span class="popup__error" id="title-error"></span>
+        <input type="url" id="url" class="popup__input" name="url" placeholder="Ссылка на картинку" autocomplete="off" required>
+        <span class="popup__error" id="url-error"></span>
+        <button class="popup__save popup__save_disabled" type="submit">Создать</button>
+      </form>
+    </div>
+  </section>
+  <section class="popup popup_type_image">
+    <div class="popup__image-container">
+      <button class="popup__close" type="button"></button>
+      <img class="popup__photo" src="#" alt="#">
+      <p class="popup__caption"></p>
+    </div>
+  </section>
+  <template id="element-template">
+    <li class="element">
+      <button class="element__delete-button" type="button"></button>
+      <img class="element__image">
+      <div class="element__info">
+        <h3 class="element__title"></h3>
+        <button class="element__like-button" type="button"></button>
+      </div>
+    </li>
+  </template>
+</body>
+
+</html>

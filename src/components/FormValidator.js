@@ -78,6 +78,12 @@ class FormValidator {
             buttonElement.disabled = false;
         }
     };
+
+    disableSubmitButton() {
+         // сделай кнопку неактивной
+         this._submitButton.classList.add(this._inactiveButtonClass);
+         this._submitButton.disabled = true;
+    }
 }
 
 export { FormValidator }
