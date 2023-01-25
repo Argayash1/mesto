@@ -1,12 +1,12 @@
 //Импорт массива изображений 
 import initialCards from '../scripts/initialCards.js';
 import config from '../scripts/config.js';
-import {Card} from '../components/Сard.js';
-import {FormValidator} from '../components/FormValidator.js';
-import {Section} from '../components/Section.js';
-import {PopupWithImage} from '../components/PopupWithImage.js';
-import {PopupWithForm} from '../components/PopupWithForm.js';
-import {UserInfo} from '../components/UserInfo.js';
+import { Card } from '../components/Сard.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { Section } from '../components/Section.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
 import './index.css';
 
 // Попап редактирования профиля
@@ -20,17 +20,16 @@ const jobInput = popupProfileFormElement.querySelector('input[name="job"]'); //�
 const popupCardElement = document.querySelector('.popup_type_card'); //Нашли попап добавления карточки в разметке.  
 const popupCardOpenButtonElement = document.querySelector('.profile__add-button'); // Нашли кнопку открытия попапа добавления карточки
 const popupСardFormElement = popupCardElement.querySelector('.popup__form_type_card');
-const popupCardElementSubmitButton = popupCardElement.querySelector('.popup__save');
 
 
 // Создаём функцию генерации (создания) карточки
 const createCard = (item) => {
   // Создадим экземпляр карточки
   const card = new Card(item, '#element-template', handleOpenPopupImage);
-  
+
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
-  
+
   return cardElement;
 }
 
@@ -41,18 +40,17 @@ const createCard = (item) => {
 // 2. Вставляем уже созданный функцией createCard готовый DOM-элемент карточки в список карточек (контейнер 
 // с карточками) 
 const cardList = new Section({
-  data: initialCards,
   renderer: (item) => {
     const cardElement = createCard(item);
     // С помощью публичного метода addItem класса Section добавляем готовый DOM-элемент карточки в контейнер
     cardList.addItem(cardElement);
-    },
   },
+},
   '.elements-list'
 );
 
 // С помощью публичного метода renderItems класса Section добавляем готовые DOM-элементы всех карточек в контейнер
-cardList.renderItems();
+cardList.renderItems(initialCards);
 
 // Создаём экземпляр класса PopupWithImage для попапа с картинкой и устанавливаем слушателей в этот экземпляр 
 const popupImage = new PopupWithImage('.popup_type_image');
@@ -75,7 +73,7 @@ const handleCardFormSubmit = (formValues) => {
 }
 
 // Создаём новый экземпляр класса UserInfo 
-const userInfo = new UserInfo({ nameSelector: '.profile-info__name', infoSelector: '.profile-info__profession'});
+const userInfo = new UserInfo({ nameSelector: '.profile-info__name', infoSelector: '.profile-info__profession' });
 
 // Создаём новый экземпляр класса PopupWithForm для попапа профиля и устанавливаем слушателей в этот экземпляр
 const popupProfile = new PopupWithForm('.popup_type_profile', handleProfileFormSubmit);
