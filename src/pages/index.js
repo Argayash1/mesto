@@ -72,7 +72,6 @@ const handleCardFormSubmit = (formValues) => {
   const newCard = createCard(cardItem);
   cardList.addItem(newCard);
   popupCard.close();
-  popupCardFormValidator.disableSubmitButton();
 }
 
 // Создаём новый экземпляр класса UserInfo 
@@ -106,6 +105,7 @@ popupProfileOpenButtonElement.addEventListener('click', function () {
 
 //Слушатель, который открывает попап добавления карточки по клику на кнопке add
 popupCardOpenButtonElement.addEventListener('click', function () {
+  popupCardFormValidator.disableSubmitButton(popupCardElementSubmitButton);
   popupCard.open();
 });
 

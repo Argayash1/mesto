@@ -63,26 +63,30 @@ class FormValidator {
         })
     };
 
-    //Создаём функцию активирования (раздизэйблить) и деактивирования (задизэйблить) кнопки 
+    // Создаём функцию активирования (раздизэйблить) и деактивирования (задизэйблить) кнопки 
     // Функция принимает массив полей ввода
     // и элемент кнопки, состояние которой нужно менять
     _toggleButtonState(inputList, buttonElement) {
         // Если есть хотя бы один невалидный инпут
         if (this._hasInvalidInput(inputList)) {
-            // сделай кнопку неактивной
-            buttonElement.classList.add(this._inactiveButtonClass);
-            buttonElement.disabled = true;
+             // сделай кнопку неактивной
+            this.disableSubmitButton(buttonElement);
         } else {
             // иначе сделай кнопку активной
-            buttonElement.classList.remove(this._inactiveButtonClass);
-            buttonElement.disabled = false;
+            this.enableSubmitButton(buttonElement);
         }
     };
 
-    disableSubmitButton() {
-         // сделай кнопку неактивной
-         this._submitButton.classList.add(this._inactiveButtonClass);
-         this._submitButton.disabled = true;
+    disableSubmitButton(buttonElement) {
+        // сделай кнопку неактивной
+        buttonElement.classList.add(this._inactiveButtonClass);
+        buttonElement.disabled = true;
+    }
+
+    enableSubmitButton(buttonElement) {
+        // сделай кнопку активной
+        buttonElement.classList.remove(this._inactiveButtonClass);
+        buttonElement.disabled = false;
     }
 }
 

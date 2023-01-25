@@ -6,17 +6,17 @@ class UserInfo {
 
     getUserInfo() {
         // создаём пустой объект
-        this._userInfo = {};
+        const userInfo = {};
 
         // Присваиваем полю name объекта userInfo значение элемента имени пользователя из блока профиля
-        this._userInfo.name = this._nameElement.textContent
+        userInfo.name = this._nameElement.textContent
 
         // Присваиваем полю info объекта userInfo значение элемента информации о себе из блока профиля
-        this._userInfo.info = this._infoElement.textContent
+        userInfo.info = this._infoElement.textContent
 
         // Возвращаем объект userInfo с полями name и info, которым присвоены значения элементов имени пользователя
         // и информации о себе из блока профиля 
-        return this._userInfo;
+        return userInfo;
     }
 
     setUserInfo({ name, job }) {

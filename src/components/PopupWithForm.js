@@ -12,16 +12,16 @@ class PopupWithForm extends Popup {
 
     _getInputValues() {
         // создаём пустой объект
-        this._formValues = {};
+        const formValues = {};
 
         // добавляем в этот объект значения всех полей (инпутов), обойдя все поля (инпуты) по свойству (полю) name,
         // то есть в объекте this._formValues  
         this._inputList.forEach(input => {
-            this._formValues[input.name] = input.value;
+            formValues[input.name] = input.value;
         });
 
         // возвращаем объект значений
-        return this._formValues;
+        return formValues;
     }
 
     setEventListeners() {

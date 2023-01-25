@@ -37,11 +37,13 @@ class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector('.element__like-button').addEventListener('click', () => {
+    this._likeButton = this._element.querySelector('.element__like-button');
+    this._likeButton.addEventListener('click', () => {
       this._handleLikeButtonClick();
     });
 
-    this._element.querySelector('.element__delete-button').addEventListener('click', () => {
+    this._deleteButton = this._element.querySelector('.element__delete-button');
+    this._deleteButton.addEventListener('click', () => {
       this._handleDeleteButtonClick();
     });
 
@@ -52,7 +54,7 @@ class Card {
 
   // добавили метод _handleLikeButtonClick
   _handleLikeButtonClick() {
-    this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
+    this._likeButton.classList.toggle('element__like-button_active');
   }
 
   // добавили метод _handleDeleteButtonClick
