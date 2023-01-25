@@ -100,22 +100,25 @@ popupProfileOpenButtonElement.addEventListener('click', function () {
   const userData = userInfo.getUserInfo();
   nameInput.value = userData.name;
   jobInput.value = userData.info;
+  popupProfileFormValidator.resetValidation();
   popupProfile.open();
 });
 
 //Слушатель, который открывает попап добавления карточки по клику на кнопке add
 popupCardOpenButtonElement.addEventListener('click', function () {
-  popupCardFormValidator.disableSubmitButton(popupCardElementSubmitButton);
+  popupCardFormValidator.resetValidation();
   popupCard.open();
 });
 
 //Запускаем валидацию на форму из попапа профиля
 const popupProfileFormValidator = new FormValidator(config, popupProfileFormElement);
 popupProfileFormValidator.enableValidation();
+popupProfileFormValidator.resetValidation();
 
 //Запускаем валидацию на форму из попапа добавления карточки
 const popupCardFormValidator = new FormValidator(config, popupСardFormElement);
 popupCardFormValidator.enableValidation();
+popupCardFormValidator.resetValidation();
 
 
 

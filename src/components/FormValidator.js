@@ -88,6 +88,17 @@ class FormValidator {
         buttonElement.classList.remove(this._inactiveButtonClass);
         buttonElement.disabled = false;
     }
+
+    // Огромное Вам спасибо, какая же интересная функция! Повозился с ней немного, и когда разобрался,
+    // увидел, как она здорово работает! 
+    resetValidation() {
+        this._toggleButtonState(this._inputList, this._submitButton); // <== управляем кнопкой ==
+  
+        this._inputList.forEach((input) => {
+          this._hideInputError(input) // <==очищаем ошибки ==
+        });
+  
+      }
 }
 
 export { FormValidator }
