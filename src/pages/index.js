@@ -29,7 +29,7 @@ const createCard = (item) => {
 
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
-
+  
   return cardElement;
 }
 
@@ -41,9 +41,11 @@ const createCard = (item) => {
 // с карточками) 
 const cardList = new Section({
   renderer: (item) => {
-    const cardElement = createCard(item);
+    // Создаём новую карточку и готовим её к публикации (т. е. создаём уже готовый DOM-элемент карточки) 
+    // с помощью функции createCard  
+  const cardElement = createCard(item);
     // С помощью публичного метода addItem класса Section добавляем готовый DOM-элемент карточки в контейнер
-    cardList.addItem(cardElement);
+   cardList.addItem(cardElement);
   },
 },
   '.elements-list'

@@ -6,8 +6,7 @@ class Section {
   }
 
   renderItems(data) {
-    this._renderedItems = data; // data — это массив с объектами карточек, в каждом объекте 2 поля - name и link;
-    this._renderedItems.forEach(item => {
+    data.forEach(item => {
       this._renderer(item); // вызываем renderer, передав item
     });
   }
