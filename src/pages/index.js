@@ -6,6 +6,7 @@ import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { UserInfo } from '../components/UserInfo.js';
 import './index.css';
 import { Popup } from '../components/Popup.js';
@@ -114,7 +115,7 @@ const popupCard = new PopupWithForm('.popup_type_card', handleCardFormSubmit);
 popupCard.setEventListeners();
 
 // Создаём новый экземпляр класса Popup для попапа удаления карточки
-const popupDeleteCard = new PopupWithForm('.popup_type_delete-card', handleDeleteCardSubmit);
+const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteCardSubmit);
 popupDeleteCard.setEventListeners();
 
 // Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара
