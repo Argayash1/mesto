@@ -151,12 +151,12 @@ profileImageElement.addEventListener('click', function () {
   popupNewAvatar.open();
 });
 
-//Запускаем валидацию на форму из попапа профиля
+// Запускаем валидацию на форму из попапа профиля
 const popupProfileFormValidator = new FormValidator(config, popupProfileFormElement);
 popupProfileFormValidator.enableValidation();
 popupProfileFormValidator.resetValidation();
 
-//Запускаем валидацию на форму из попапа добавления карточки
+// Запускаем валидацию на форму из попапа добавления карточки
 const popupCardFormValidator = new FormValidator(config, popupСardFormElement);
 popupCardFormValidator.enableValidation();
 popupCardFormValidator.resetValidation();
