@@ -9,7 +9,6 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { UserInfo } from '../components/UserInfo.js';
 import './index.css';
-import { Popup } from '../components/Popup.js';
 
 // Попап редактирования профиля
 const popupProfileElement = document.querySelector('.popup_type_profile'); // Нашли попап редактирования профиля в разметке.
