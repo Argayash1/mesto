@@ -22,10 +22,6 @@ const popupCardElement = document.querySelector('.popup_type_card'); // Нашл
 const popupCardOpenButtonElement = document.querySelector('.profile__add-button'); // Нашли кнопку открытия попапа добавления карточки
 const popupСardFormElement = popupCardElement.querySelector('.popup__form_type_card'); //Нашли форму в попапе добавления карточки
 
-// Темплэйт(шаблон) для создания новой карточки
-const templateElement = document.querySelector('#element-template'); // Нашли в HTML-коде блок с template’ом
-const templateDeleteButtonElement = templateElement.querySelector('.element__delete-button'); // Нашли в блоке с template’ом кнопку удаления карточки
-
 // Попап обновления аватара
 const profileImageElement = document.querySelector('.profile__avatar');
 
@@ -41,6 +37,8 @@ const createCard = (item) => {
 
   return cardElement;
 }
+
+// #element-template-without-delete
 
 // Создаём функцию генерации (создания) карточки без кнопки удаления карточки
 const createCardWithoutDelete = (item) => {
