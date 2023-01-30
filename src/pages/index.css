@@ -45,6 +45,7 @@
 @import url(../blocks/popup/__photo/popup__photo.css);
 @import url(../blocks/popup/__caption/popup__caption.css);
 @import url(../blocks/popup/_type/popup_type_delete-card.css);
+@import url(../blocks/popup/__form/_type/popup__form_type_delete-card.css);
 @import url(../blocks/popup/_type/popup_type_new-avatar.css);
 
 @import url(../blocks/footer/footer.css);

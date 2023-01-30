@@ -54,6 +54,10 @@ class Card {
     });
   }
 
+  //setDeleteCardEventListener() {
+    
+  //}
+
 
   // добавили метод _handleLikeButtonClick
   _handleLikeButtonClick() {
@@ -61,7 +65,7 @@ class Card {
   }
 
   // добавили метод _handleDeleteButtonClick
-  _handleDeleteButtonClick() {
+  handleDeleteButtonClick() {
     this._element.remove();
     this._element = null;
   }

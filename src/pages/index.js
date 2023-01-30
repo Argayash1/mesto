@@ -42,6 +42,17 @@ const createCard = (item) => {
   return cardElement;
 }
 
+// Создаём функцию генерации (создания) карточки без кнопки удаления карточки
+const createCardWithoutDelete = (item) => {
+  // Создадим экземпляр карточки
+  const cardWithoutDelete = new Card(item, '#element-template-without-delete', handleOpenPopupImage, handleOpenPopupDeleteCard);
+
+  // Создаём карточку и возвращаем наружу
+  const cardWithoutDeleteElement = cardWithoutDelete.generateCard();
+
+  return cardWithoutDeleteElement;
+}
+
 
 // Создаём эеземпляр класса Section, то есть списка карточек: 
 // 1. С помощью функции createCard cоздаём и сохранякем в переменную карточку на основе объекта из 
@@ -77,15 +88,20 @@ function handleOpenPopupDeleteCard() {
   popupDeleteCard.open();
 }
 
-// Создаём функцию субмита попапа добавления карточки
+// Создаём функцию сабмита попапа добавления карточки
 const handleCardFormSubmit = (formValues) => {
   const cardItem = {
     name: formValues.place,
     link: formValues.url
   }
-  const newCard = createCard(cardItem);
+  const newCard = createCardWithoutDelete(cardItem);
   cardList.addItem(newCard);
   popupCard.close();
+}
+
+// Создаём функцию сабмита попапа удаления карточки
+function handleDeleteCardSubmit() {
+  cardElement.handleDeleteButtonClick();
 }
 
 // Создаём новый экземпляр класса UserInfo 
@@ -100,11 +116,12 @@ const popupCard = new PopupWithForm('.popup_type_card', handleCardFormSubmit);
 popupCard.setEventListeners();
 
 // Создаём новый экземпляр класса Popup для попапа удаления карточки
-const popupDeleteCard = new Popup('.popup_type_delete-card');
+const popupDeleteCard = new PopupWithForm('.popup_type_delete-card', handleDeleteCardSubmit);
 popupDeleteCard.setEventListeners();
 
 // Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара
 const popupNewAvatar = new PopupWithForm('.popup_type_new-avatar');
+popupNewAvatar.setEventListeners();
 
 // Создаём функцию сабмита попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
 // данные которые вписываются пользователем в инпуты в попапе профиля
