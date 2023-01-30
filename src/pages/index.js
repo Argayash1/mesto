@@ -86,7 +86,7 @@ function handleOpenPopupDeleteCard() {
   popupDeleteCard.open();
 }
 
-// Создаём функцию сабмита попапа добавления карточки
+// Создаём функцию сабмита для попапа добавления карточки
 const handleCardFormSubmit = (formValues) => {
   const cardItem = {
     name: formValues.place,
@@ -97,7 +97,7 @@ const handleCardFormSubmit = (formValues) => {
   popupCard.close();
 }
 
-// Создаём функцию сабмита попапа удаления карточки
+// Создаём функцию сабмита попапа для удаления карточки
 function handleDeleteCardSubmit() {
   cardElement.handleDeleteButtonClick();
 }
@@ -121,7 +121,7 @@ popupDeleteCard.setEventListeners();
 const popupNewAvatar = new PopupWithForm('.popup_type_new-avatar');
 popupNewAvatar.setEventListeners();
 
-// Создаём функцию сабмита попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
+// Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
 // данные которые вписываются пользователем в инпуты в попапе профиля
 function handleProfileFormSubmit(formValues) {
   userInfo.setUserInfo(formValues);
