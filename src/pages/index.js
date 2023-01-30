@@ -8,28 +8,37 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 import './index.css';
+import { Popup } from '../components/Popup.js';
 
 // Попап редактирования профиля
-const popupProfileElement = document.querySelector('.popup_type_profile'); //Нашли попап редактирования профиля в разметке.
+const popupProfileElement = document.querySelector('.popup_type_profile'); // Нашли попап редактирования профиля в разметке.
 const popupProfileOpenButtonElement = document.querySelector('.profile-info__edit-button'); // Нашли кнопку открытия попапа редактирования профиля.
 const popupProfileFormElement = popupProfileElement.querySelector('.popup__form_type_profile'); //Нашли форму в попапе редактирования профиля
 const nameInput = popupProfileFormElement.querySelector('input[name="name"]'); //Нашли инпут для имени в форме
 const jobInput = popupProfileFormElement.querySelector('input[name="job"]'); //Нашли инпут для профессии в форме
 
 // Попап добавления карточки
-const popupCardElement = document.querySelector('.popup_type_card'); //Нашли попап добавления карточки в разметке.  
+const popupCardElement = document.querySelector('.popup_type_card'); // Нашли попап добавления карточки в разметке.  
 const popupCardOpenButtonElement = document.querySelector('.profile__add-button'); // Нашли кнопку открытия попапа добавления карточки
-const popupСardFormElement = popupCardElement.querySelector('.popup__form_type_card');
+const popupСardFormElement = popupCardElement.querySelector('.popup__form_type_card'); //Нашли форму в попапе добавления карточки
+
+// Темплэйт(шаблон) для создания новой карточки
+const templateElement = document.querySelector('#element-template'); // Нашли в HTML-коде блок с template’ом
+const templateDeleteButtonElement = templateElement.querySelector('.element__delete-button'); // Нашли в блоке с template’ом кнопку удаления карточки
+
+// Попап обновления аватара
+const profileImageElement = document.querySelector('.profile__avatar');
+
 
 
 // Создаём функцию генерации (создания) карточки
 const createCard = (item) => {
   // Создадим экземпляр карточки
-  const card = new Card(item, '#element-template', handleOpenPopupImage);
+  const card = new Card(item, '#element-template', handleOpenPopupImage, handleOpenPopupDeleteCard);
 
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
-  
+
   return cardElement;
 }
 
@@ -43,9 +52,9 @@ const cardList = new Section({
   renderer: (item) => {
     // Создаём новую карточку и готовим её к публикации (т. е. создаём уже готовый DOM-элемент карточки) 
     // с помощью функции createCard  
-  const cardElement = createCard(item);
+    const cardElement = createCard(item);
     // С помощью публичного метода addItem класса Section добавляем готовый DOM-элемент карточки в контейнер
-   cardList.addItem(cardElement);
+    cardList.addItem(cardElement);
   },
 },
   '.elements-list'
@@ -61,6 +70,11 @@ popupImage.setEventListeners();
 // Создаём функцию открытия попапа показа изображения по клике на картинку карточки
 function handleOpenPopupImage(name, link) {
   popupImage.open(name, link);
+}
+
+// Создаём функцию открытия попапа удаления карточки по клике на кнопку удаления карточки
+function handleOpenPopupDeleteCard() {
+  popupDeleteCard.open();
 }
 
 // Создаём функцию субмита попапа добавления карточки
@@ -85,6 +99,13 @@ popupProfile.setEventListeners();
 const popupCard = new PopupWithForm('.popup_type_card', handleCardFormSubmit);
 popupCard.setEventListeners();
 
+// Создаём новый экземпляр класса Popup для попапа удаления карточки
+const popupDeleteCard = new Popup('.popup_type_delete-card');
+popupDeleteCard.setEventListeners();
+
+// Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара
+const popupNewAvatar = new PopupWithForm('.popup_type_new-avatar');
+
 // Создаём функцию сабмита попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
 // данные которые вписываются пользователем в инпуты в попапе профиля
 function handleProfileFormSubmit(formValues) {
@@ -92,7 +113,7 @@ function handleProfileFormSubmit(formValues) {
   popupProfile.close();
 }
 
-//Слушатели (обработчики) событий.
+// Слушатели (обработчики) событий.
 
 // Слушатель, который запускает функцию открытия попапа редактирования профиля по клику на кнопке edit и делает так,  
 // чтобы инпуты в форме попапа приняли текстовые значения из блока профиля для имени и професии
@@ -104,10 +125,15 @@ popupProfileOpenButtonElement.addEventListener('click', function () {
   popupProfile.open();
 });
 
-//Слушатель, который открывает попап добавления карточки по клику на кнопке add
+// Слушатель, который открывает попап добавления карточки по клику на кнопке add
 popupCardOpenButtonElement.addEventListener('click', function () {
   popupCardFormValidator.resetValidation();
   popupCard.open();
+});
+
+// Слушатель, который открывает попап обновления аватара
+profileImageElement.addEventListener('click', function () {
+  popupNewAvatar.open();
 });
 
 //Запускаем валидацию на форму из попапа профиля

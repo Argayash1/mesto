@@ -1,9 +1,10 @@
 class Card {
-  constructor(data, templateSelector, handleOpenPopupImage) {
+  constructor(data, templateSelector, handleOpenPopupImage, handleOpenPopupDeleteCard) {
     this._text = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector; // записали селектор в приватное поле 
     this._handleOpenPopupImage = handleOpenPopupImage;
+    this._handleOpenPopupDeleteCard = handleOpenPopupDeleteCard;
   }
   //Метод, который найдёт по селектору темплейта темплейт-элемент (шаблон карточки), извлечёт его содержимое,
   //в содержимом найдёт элемент с классом card, клонирует его и вернёт клонированный элемент.
@@ -44,13 +45,15 @@ class Card {
 
     this._deleteButton = this._element.querySelector('.element__delete-button');
     this._deleteButton.addEventListener('click', () => {
-      this._handleDeleteButtonClick();
+      this._handleOpenPopupDeleteCard();
+      //this._handleDeleteButtonClick();
     });
 
     this._elementImg.addEventListener('click', () => {
       this._handleOpenPopupImage(this._text, this._link);
     });
   }
+
 
   // добавили метод _handleLikeButtonClick
   _handleLikeButtonClick() {
