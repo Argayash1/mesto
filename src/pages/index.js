@@ -113,7 +113,7 @@ popupProfile.setEventListeners();
 const popupCard = new PopupWithForm('.popup_type_card', handleCardFormSubmit);
 popupCard.setEventListeners();
 
-// Создаём новый экземпляр класса Popup для попапа удаления карточки
+// Создаём новый экземпляр класса PopupWithConfirmation для попапа удаления карточки
 const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteCardSubmit);
 popupDeleteCard.setEventListeners();
 
