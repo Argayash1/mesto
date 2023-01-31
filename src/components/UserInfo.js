@@ -1,7 +1,8 @@
 class UserInfo {
-    constructor({ nameSelector, infoSelector }) {
+    constructor({ nameSelector, infoSelector, avatarSelector }) {
         this._nameElement = document.querySelector(nameSelector);
         this._infoElement = document.querySelector(infoSelector);
+        this._avatarElement = document.querySelector(avatarSelector);
     }
 
     getUserInfo() {
@@ -19,7 +20,7 @@ class UserInfo {
         return userInfo;
     }
 
-    setUserInfo({ name, about }) {
+    setUserInfo({ name, about, avatar }) {
         // Присваиваем элементу имени пользователя из блока профиля значение name, которое передаётся а качестве
         // аргумента при вызове метода setUserInfo
         this._nameElement.textContent = name;
@@ -27,6 +28,7 @@ class UserInfo {
         // Присваиваем элементу информации о себе из блока профиля значение info, которое передаётся в качестве 
         // аргумента при вызове метода setUserInfo
         this._infoElement.textContent = about;
+        this._avatarElement.src = avatar;
     }
 
 }

@@ -42,6 +42,14 @@ api.getUserInfo()
   console.log(err); // выведем ошибку в консоль
 });
 
+api.getInitialCards()
+.then((result) => {
+  cardList.renderItems(result); // С помощью публичного метода renderItems класса Section добавляем готовые DOM-элементы всех карточек в контейнер
+})
+.catch((err) => {
+  console.log(err); // выведем ошибку в консоль
+});
+
 
 
 // Создаём функцию генерации (создания) карточки
@@ -86,8 +94,6 @@ const cardList = new Section({
   '.elements-list'
 );
 
-// С помощью публичного метода renderItems класса Section добавляем готовые DOM-элементы всех карточек в контейнер
-cardList.renderItems(initialCards);
 
 // Создаём экземпляр класса PopupWithImage для попапа с картинкой и устанавливаем слушателей в этот экземпляр 
 const popupImage = new PopupWithImage('.popup_type_image');
@@ -120,7 +126,7 @@ function handleDeleteCardSubmit() {
 }
 
 // Создаём новый экземпляр класса UserInfo 
-const userInfo = new UserInfo({ nameSelector: '.profile-info__name', infoSelector: '.profile-info__profession' });
+const userInfo = new UserInfo({ nameSelector: '.profile-info__name', infoSelector: '.profile-info__profession', avatarSelector: '.profile__avatar'});
 
 // Создаём новый экземпляр класса PopupWithForm для попапа профиля и устанавливаем слушателей в этот экземпляр
 const popupProfile = new PopupWithForm('.popup_type_profile', handleProfileFormSubmit);
