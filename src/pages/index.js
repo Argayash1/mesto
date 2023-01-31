@@ -8,6 +8,7 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { UserInfo } from '../components/UserInfo.js';
+import { Api } from '../components/Api.js';
 import './index.css';
 
 // Попап редактирования профиля
@@ -15,7 +16,7 @@ const popupProfileElement = document.querySelector('.popup_type_profile'); // Н
 const popupProfileOpenButtonElement = document.querySelector('.profile-info__edit-button'); // Нашли кнопку открытия попапа редактирования профиля.
 const popupProfileFormElement = popupProfileElement.querySelector('.popup__form_type_profile'); //Нашли форму в попапе редактирования профиля
 const nameInput = popupProfileFormElement.querySelector('input[name="name"]'); //Нашли инпут для имени в форме
-const jobInput = popupProfileFormElement.querySelector('input[name="job"]'); //Нашли инпут для профессии в форме
+const jobInput = popupProfileFormElement.querySelector('input[name="about"]'); //Нашли инпут для профессии в форме
 
 // Попап добавления карточки
 const popupCardElement = document.querySelector('.popup_type_card'); // Нашли попап добавления карточки в разметке.  
@@ -24,6 +25,22 @@ const popupСardFormElement = popupCardElement.querySelector('.popup__form_type_
 
 // Попап обновления аватара
 const profileImageElement = document.querySelector('.profile__avatar');
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59',
+  headers: {
+    authorization: 'cfebb862-70aa-4cd6-a9bd-6d5609babeaa',
+    'Content-Type': 'application/json'
+  }
+}); 
+
+api.getUserInfo()
+.then((result) => {
+  userInfo.setUserInfo(result);
+})
+.catch((err) => {
+  console.log(err); // выведем ошибку в консоль
+});
 
 
 
@@ -127,6 +144,7 @@ function handleProfileFormSubmit(formValues) {
   userInfo.setUserInfo(formValues);
   popupProfile.close();
 }
+
 
 // Слушатели (обработчики) событий.
 
