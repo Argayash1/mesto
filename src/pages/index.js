@@ -147,8 +147,15 @@ popupNewAvatar.setEventListeners();
 // Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
 // данные которые вписываются пользователем в инпуты в попапе профиля
 function handleProfileFormSubmit(formValues) {
-  userInfo.setUserInfo(formValues);
-  popupProfile.close();
+  
+  api.editProfile(formValues)
+  .then((formValues) => {
+    userInfo.setUserInfo(formValues);
+    popupProfile.close();
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
 }
 
 
