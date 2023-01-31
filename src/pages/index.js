@@ -32,23 +32,23 @@ const api = new Api({
     authorization: 'cfebb862-70aa-4cd6-a9bd-6d5609babeaa',
     'Content-Type': 'application/json'
   }
-}); 
+});
 
 api.getUserInfo()
-.then((result) => {
-  userInfo.setUserInfo(result);
-})
-.catch((err) => {
-  console.log(err); // выведем ошибку в консоль
-});
+  .then((result) => {
+    userInfo.setUserInfo(result);
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
 
 api.getInitialCards()
-.then((result) => {
-  cardList.renderItems(result); // С помощью публичного метода renderItems класса Section добавляем готовые DOM-элементы всех карточек в контейнер
-})
-.catch((err) => {
-  console.log(err); // выведем ошибку в консоль
-});
+  .then((result) => {
+    cardList.renderItems(result); // С помощью публичного метода renderItems класса Section добавляем готовые DOM-элементы всех карточек в контейнер
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
 
 
 
@@ -61,19 +61,6 @@ const createCard = (item) => {
   const cardElement = card.generateCard();
 
   return cardElement;
-}
-
-// #element-template-without-delete
-
-// Создаём функцию генерации (создания) карточки без кнопки удаления карточки
-const createCardWithoutDelete = (item) => {
-  // Создадим экземпляр карточки
-  const cardWithoutDelete = new Card(item, '#element-template-without-delete', handleOpenPopupImage, handleOpenPopupDeleteCard);
-
-  // Создаём карточку и возвращаем наружу
-  const cardWithoutDeleteElement = cardWithoutDelete.generateCard();
-
-  return cardWithoutDeleteElement;
 }
 
 
@@ -111,13 +98,22 @@ function handleOpenPopupDeleteCard() {
 
 // Создаём функцию сабмита для попапа добавления карточки
 const handleCardFormSubmit = (formValues) => {
-  const cardItem = {
-    name: formValues.place,
-    link: formValues.url
-  }
-  const newCard = createCardWithoutDelete(cardItem);
-  cardList.addItem(newCard);
-  popupCard.close();
+  // console.log(formValues);
+  api.addNewCard(formValues)
+    .then((formValues) => {
+      // console.log(formValues)
+      //const cardItem = {
+      //  name: formValues.name,
+      //  link: formValues.link
+      // }
+      //console.log(cardItem);
+      const newCard = createCard(formValues);
+      cardList.addItem(newCard);
+      popupCard.close();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
 }
 
 // Создаём функцию сабмита попапа для удаления карточки
@@ -126,7 +122,7 @@ function handleDeleteCardSubmit() {
 }
 
 // Создаём новый экземпляр класса UserInfo 
-const userInfo = new UserInfo({ nameSelector: '.profile-info__name', infoSelector: '.profile-info__profession', avatarSelector: '.profile__avatar'});
+const userInfo = new UserInfo({ nameSelector: '.profile-info__name', infoSelector: '.profile-info__profession', avatarSelector: '.profile__avatar' });
 
 // Создаём новый экземпляр класса PopupWithForm для попапа профиля и устанавливаем слушателей в этот экземпляр
 const popupProfile = new PopupWithForm('.popup_type_profile', handleProfileFormSubmit);
@@ -147,15 +143,14 @@ popupNewAvatar.setEventListeners();
 // Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
 // данные которые вписываются пользователем в инпуты в попапе профиля
 function handleProfileFormSubmit(formValues) {
-  
   api.editProfile(formValues)
-  .then((formValues) => {
-    userInfo.setUserInfo(formValues);
-    popupProfile.close();
-  })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
+    .then((formValues) => {
+      userInfo.setUserInfo(formValues);
+      popupProfile.close();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
 }
 
 

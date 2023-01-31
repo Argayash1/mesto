@@ -50,6 +50,25 @@ class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
+
+  addNewCard(formValues) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: formValues.place,
+        link: formValues.url
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
 }
 
 export { Api }
