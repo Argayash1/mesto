@@ -97,6 +97,7 @@ function handleOpenPopupDeleteCard() {
 
 // Создаём функцию сабмита для попапа добавления карточки
 const handleCardFormSubmit = (formValues) => {
+  popupCard.waitForTheLoad();
   api.addNewCard(formValues)
     .then((formValues) => {
       const newCard = createCard(formValues);
@@ -105,7 +106,10 @@ const handleCardFormSubmit = (formValues) => {
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
-    });
+    })
+    .finally(() => { // В любом случае
+      popupCard.loadIsFinished();
+  }); 
 }
 
 // Создаём функцию сабмита попапа для удаления карточки
@@ -114,14 +118,18 @@ function handleDeleteCardSubmit() {
 }
 
 function handleNewAvatarFormSubmit(formValues) {
+  popupNewAvatar.waitForTheLoad();
   api.addNewAvatar(formValues)
-  .then((formValues) => {
-    profileImageElement.src = formValues.avatar;
-    popupNewAvatar.close();
-  })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
+    .then((formValues) => {
+      profileImageElement.src = formValues.avatar;
+      popupNewAvatar.close();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    })
+    .finally(() => { // В любом случае
+      popupNewAvatar.loadIsFinished();
+  });  
 }
 
 // Создаём новый экземпляр класса UserInfo 
@@ -146,6 +154,7 @@ popupNewAvatar.setEventListeners();
 // Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
 // данные которые вписываются пользователем в инпуты в попапе профиля
 function handleProfileFormSubmit(formValues) {
+  popupProfile.waitForTheLoad();
   api.editProfile(formValues)
     .then((formValues) => {
       userInfo.setUserInfo(formValues);
@@ -153,7 +162,10 @@ function handleProfileFormSubmit(formValues) {
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
-    });
+    })
+    .finally(() => { // В любом случае
+      popupProfile.loadIsFinished();
+  });
 }
 
 
