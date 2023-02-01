@@ -51,6 +51,21 @@ class Api {
       });
   }
 
+  deleteCard() {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
+
   addNewCard(formValues) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
