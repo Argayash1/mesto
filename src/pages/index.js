@@ -40,6 +40,7 @@ const api = new Api({
   }
 });
 
+
 // Создаём промис для загрузки информации о пользователе с сервера
 api.getUserInfo()
   .then((result) => {
@@ -59,7 +60,6 @@ api.getInitialCards()
   });
 
 
-
 // Создание карточек
 // _______________________________________________________________________________________________________________
 
@@ -73,7 +73,6 @@ const createCard = (item) => {
 
   return cardElement;
 }
-
 
 // Создаём эеземпляр класса Section, то есть списка карточек: 
 // 1. С помощью функции createCard cоздаём и сохранякем в переменную карточку на основе объекта из 
@@ -97,32 +96,8 @@ const cardList = new Section({
   '.elements-list'
 );
 
-// Создание экземпляров классов для попапов
+// Функции для попапов
 // _______________________________________________________________________________________________________________
-
-// Создаём экземпляр класса PopupWithImage для попапа с картинкой и устанавливаем слушателей в этот экземпляр 
-const popupImage = new PopupWithImage('.popup_type_image');
-popupImage.setEventListeners();
-
- // Создаём новый экземпляр класса UserInfo 
- const userInfo = new UserInfo({ nameSelector: '.profile-info__name', infoSelector: '.profile-info__profession', avatarSelector: '.profile__avatar' });
-
- // Создаём новый экземпляр класса PopupWithForm для попапа профиля и устанавливаем слушателей в этот экземпляр
- const popupProfile = new PopupWithForm('.popup_type_profile', handleProfileFormSubmit);
- popupProfile.setEventListeners();
-
- // Создаём новый экземпляр класса PopupWithForm для попапа добавления карточки и устанавливаем слушателей в этот экземпляр
- const popupCard = new PopupWithForm('.popup_type_card', handleCardFormSubmit);
- popupCard.setEventListeners();
-
- // Создаём новый экземпляр класса PopupWithConfirmation для попапа удаления карточки
- const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteCardSubmit);
- popupDeleteCard.setEventListeners();
-
- // Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара пользователя
- const popupNewAvatar = new PopupWithForm('.popup_type_new-avatar', handleNewAvatarFormSubmit);
- popupNewAvatar.setEventListeners();
-
 
 // Создаём функцию открытия попапа показа изображения по клике на картинку карточки
 function handleOpenPopupImage(name, link) {
@@ -161,79 +136,105 @@ function handleDeleteCardSubmit() {
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
-  }
+}
 
 // Создаём функцию сабмита попапа для обновления аватара пользователя
 const handleNewAvatarFormSubmit = (formValues) => {
-    popupNewAvatar.waitForTheLoad();
-    api.addNewAvatar(formValues)
-      .then((formValues) => {
-        profileImageElement.src = formValues.avatar;
-        popupNewAvatar.close();
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      })
-      .finally(() => { // В любом случае
-        popupNewAvatar.loadIsFinished();
-      });
-  }
+  popupNewAvatar.waitForTheLoad();
+  api.addNewAvatar(formValues)
+    .then((formValues) => {
+      profileImageElement.src = formValues.avatar;
+      popupNewAvatar.close();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    })
+    .finally(() => { // В любом случае
+      popupNewAvatar.loadIsFinished();
+    });
+}
 
- 
-  // Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
-  // данные которые вписываются пользователем в инпуты в попапе профиля
-  function handleProfileFormSubmit(formValues) {
-    popupProfile.waitForTheLoad();
-    api.editProfile(formValues)
-      .then((formValues) => {
-        userInfo.setUserInfo(formValues);
-        popupProfile.close();
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      })
-      .finally(() => { // В любом случае
-        popupProfile.loadIsFinished();
-      });
-  }
+// Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
+// данные которые вписываются пользователем в инпуты в попапе профиля
+function handleProfileFormSubmit(formValues) {
+  popupProfile.waitForTheLoad();
+  api.editProfile(formValues)
+    .then((formValues) => {
+      userInfo.setUserInfo(formValues);
+      popupProfile.close();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    })
+    .finally(() => { // В любом случае
+      popupProfile.loadIsFinished();
+    });
+}
 
 
-  // Слушатели (обработчики) событий.
+// Создание экземпляров классов для попапов
+// _______________________________________________________________________________________________________________
 
-  // Слушатель, который запускает функцию открытия попапа редактирования профиля по клику на кнопке edit и делает так,  
-  // чтобы инпуты в форме попапа приняли текстовые значения из блока профиля для имени и професии
-  popupProfileOpenButtonElement.addEventListener('click', function () {
-    const userData = userInfo.getUserInfo();
-    nameInput.value = userData.name;
-    jobInput.value = userData.info;
-    popupProfileFormValidator.resetValidation();
-    popupProfile.open();
-  });
+// Создаём новый экземпляр класса UserInfo 
+const userInfo = new UserInfo({ nameSelector: '.profile-info__name', infoSelector: '.profile-info__profession', avatarSelector: '.profile__avatar' });
 
-  // Слушатель, который открывает попап добавления карточки по клику на кнопке add
-  popupCardOpenButtonElement.addEventListener('click', function () {
-    popupCardFormValidator.resetValidation();
-    popupCard.open();
-  });
+// Создаём экземпляр класса PopupWithImage для попапа с картинкой и устанавливаем слушателей в этот экземпляр 
+const popupImage = new PopupWithImage('.popup_type_image');
+popupImage.setEventListeners();
 
-  // Слушатель, который открывает попап обновления аватара пользователя
-  profileImageElement.addEventListener('click', function () {
-    popupNewAvatarFormValidator.resetValidation();
-    popupNewAvatar.open();
-  });
+// Создаём новый экземпляр класса PopupWithForm для попапа профиля и устанавливаем слушателей в этот экземпляр
+const popupProfile = new PopupWithForm('.popup_type_profile', handleProfileFormSubmit);
+popupProfile.setEventListeners();
 
-  // Запускаем валидацию на форму из попапа профиля
-  const popupProfileFormValidator = new FormValidator(config, popupProfileFormElement);
-  popupProfileFormValidator.enableValidation();
+// Создаём новый экземпляр класса PopupWithForm для попапа добавления карточки и устанавливаем слушателей в этот экземпляр
+const popupCard = new PopupWithForm('.popup_type_card', handleCardFormSubmit);
+popupCard.setEventListeners();
+
+// Создаём новый экземпляр класса PopupWithConfirmation для попапа удаления карточки
+const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteCardSubmit);
+popupDeleteCard.setEventListeners();
+
+// Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара пользователя
+const popupNewAvatar = new PopupWithForm('.popup_type_new-avatar', handleNewAvatarFormSubmit);
+popupNewAvatar.setEventListeners();
+
+// Слушатели (обработчики) событий.
+// _______________________________________________________________________________________________________________
+
+// Слушатель, который запускает функцию открытия попапа редактирования профиля по клику на кнопке edit и делает так,  
+// чтобы инпуты в форме попапа приняли текстовые значения из блока профиля для имени и професии
+popupProfileOpenButtonElement.addEventListener('click', function () {
+  const userData = userInfo.getUserInfo();
+  nameInput.value = userData.name;
+  jobInput.value = userData.info;
   popupProfileFormValidator.resetValidation();
+  popupProfile.open();
+});
 
-  // Запускаем валидацию на форму из попапа добавления карточки
-  const popupCardFormValidator = new FormValidator(config, popupСardFormElement);
-  popupCardFormValidator.enableValidation();
+// Слушатель, который открывает попап добавления карточки по клику на кнопке add
+popupCardOpenButtonElement.addEventListener('click', function () {
   popupCardFormValidator.resetValidation();
+  popupCard.open();
+});
 
-  // Запускаем валидацию на форму из попапа обновления аватара пользователя
-  const popupNewAvatarFormValidator = new FormValidator(config, popupNewAvatarElement);
-  popupNewAvatarFormValidator.enableValidation();
+// Слушатель, который открывает попап обновления аватара пользователя
+profileImageElement.addEventListener('click', function () {
   popupNewAvatarFormValidator.resetValidation();
+  popupNewAvatar.open();
+});
+
+// Запускаем валидацию на форму из попапа профиля
+const popupProfileFormValidator = new FormValidator(config, popupProfileFormElement);
+popupProfileFormValidator.enableValidation();
+popupProfileFormValidator.resetValidation();
+
+// Запускаем валидацию на форму из попапа добавления карточки
+const popupCardFormValidator = new FormValidator(config, popupСardFormElement);
+popupCardFormValidator.enableValidation();
+popupCardFormValidator.resetValidation();
+
+// Запускаем валидацию на форму из попапа обновления аватара пользователя
+const popupNewAvatarFormValidator = new FormValidator(config, popupNewAvatarElement);
+popupNewAvatarFormValidator.enableValidation();
+popupNewAvatarFormValidator.resetValidation();
 
