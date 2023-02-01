@@ -104,6 +104,26 @@ const cardList = new Section({
 const popupImage = new PopupWithImage('.popup_type_image');
 popupImage.setEventListeners();
 
+ // Создаём новый экземпляр класса UserInfo 
+ const userInfo = new UserInfo({ nameSelector: '.profile-info__name', infoSelector: '.profile-info__profession', avatarSelector: '.profile__avatar' });
+
+ // Создаём новый экземпляр класса PopupWithForm для попапа профиля и устанавливаем слушателей в этот экземпляр
+ const popupProfile = new PopupWithForm('.popup_type_profile', handleProfileFormSubmit);
+ popupProfile.setEventListeners();
+
+ // Создаём новый экземпляр класса PopupWithForm для попапа добавления карточки и устанавливаем слушателей в этот экземпляр
+ const popupCard = new PopupWithForm('.popup_type_card', handleCardFormSubmit);
+ popupCard.setEventListeners();
+
+ // Создаём новый экземпляр класса PopupWithConfirmation для попапа удаления карточки
+ const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteCardSubmit);
+ popupDeleteCard.setEventListeners();
+
+ // Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара пользователя
+ const popupNewAvatar = new PopupWithForm('.popup_type_new-avatar', handleNewAvatarFormSubmit);
+ popupNewAvatar.setEventListeners();
+
+
 // Создаём функцию открытия попапа показа изображения по клике на картинку карточки
 function handleOpenPopupImage(name, link) {
   popupImage.open(name, link);
@@ -159,25 +179,7 @@ const handleNewAvatarFormSubmit = (formValues) => {
       });
   }
 
-  // Создаём новый экземпляр класса UserInfo 
-  const userInfo = new UserInfo({ nameSelector: '.profile-info__name', infoSelector: '.profile-info__profession', avatarSelector: '.profile__avatar' });
-
-  // Создаём новый экземпляр класса PopupWithForm для попапа профиля и устанавливаем слушателей в этот экземпляр
-  const popupProfile = new PopupWithForm('.popup_type_profile', handleProfileFormSubmit);
-  popupProfile.setEventListeners();
-
-  // Создаём новый экземпляр класса PopupWithForm для попапа добавления карточки и устанавливаем слушателей в этот экземпляр
-  const popupCard = new PopupWithForm('.popup_type_card', handleCardFormSubmit);
-  popupCard.setEventListeners();
-
-  // Создаём новый экземпляр класса PopupWithConfirmation для попапа удаления карточки
-  const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteCardSubmit);
-  popupDeleteCard.setEventListeners();
-
-  // Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара пользователя
-  const popupNewAvatar = new PopupWithForm('.popup_type_new-avatar', handleNewAvatarFormSubmit);
-  popupNewAvatar.setEventListeners();
-
+ 
   // Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
   // данные которые вписываются пользователем в инпуты в попапе профиля
   function handleProfileFormSubmit(formValues) {
