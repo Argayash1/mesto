@@ -24,6 +24,7 @@ const popupCardOpenButtonElement = document.querySelector('.profile__add-button'
 const popupСardFormElement = popupCardElement.querySelector('.popup__form_type_card'); //Нашли форму в попапе добавления карточки
 
 // Попап обновления аватара
+const popupNewAvatarElement = document.querySelector('.popup_type_new-avatar'); // Нашли попап добавления карточки в разметке.
 const profileImageElement = document.querySelector('.profile__avatar');
 
 const api = new Api({
@@ -73,6 +74,11 @@ const cardList = new Section({
     // Создаём новую карточку и готовим её к публикации (т. е. создаём уже готовый DOM-элемент карточки) 
     // с помощью функции createCard  
     const cardElement = createCard(item);
+    // Нашли в новой карточке (уже созданном с помощью функции createCard DOM-элементе карточки) элемент кнопки 
+    // удаления карточки и сохранили его в переменную deleteButtonElement
+    const deleteButtonElement = cardElement.querySelector('.element__delete-button');
+    // С помощью метода remove удалили из DOM-элемента карточки элемент кнопки удаления карточки
+    deleteButtonElement.remove();
     // С помощью публичного метода addItem класса Section добавляем готовый DOM-элемент карточки в контейнер
     cardList.addItem(cardElement);
   },
@@ -117,6 +123,7 @@ function handleDeleteCardSubmit() {
   cardElement.handleDeleteButtonClick();
 }
 
+// Создаём функцию сабмита попапа для обновления аватара пользователя
 function handleNewAvatarFormSubmit(formValues) {
   popupNewAvatar.waitForTheLoad();
   api.addNewAvatar(formValues)
@@ -147,7 +154,7 @@ popupCard.setEventListeners();
 const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteCardSubmit);
 popupDeleteCard.setEventListeners();
 
-// Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара
+// Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара пользователя
 const popupNewAvatar = new PopupWithForm('.popup_type_new-avatar', handleNewAvatarFormSubmit);
 popupNewAvatar.setEventListeners();
 
@@ -187,8 +194,9 @@ popupCardOpenButtonElement.addEventListener('click', function () {
   popupCard.open();
 });
 
-// Слушатель, который открывает попап обновления аватара
+// Слушатель, который открывает попап обновления аватара пользователя
 profileImageElement.addEventListener('click', function () {
+  popupNewAvatarFormValidator.resetValidation();
   popupNewAvatar.open();
 });
 
@@ -202,5 +210,8 @@ const popupCardFormValidator = new FormValidator(config, popupСardFormElement);
 popupCardFormValidator.enableValidation();
 popupCardFormValidator.resetValidation();
 
-
+// Запускаем валидацию на форму из попапа обновления аватара пользователя
+const popupNewAvatarFormValidator = new FormValidator(config, popupNewAvatarElement);
+popupNewAvatarFormValidator.enableValidation();
+popupNewAvatarFormValidator.resetValidation();
 

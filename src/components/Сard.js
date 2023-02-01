@@ -54,22 +54,16 @@ class Card {
     });
   }
 
-  //setDeleteCardEventListener() {
-    
-  //}
-
-
   // добавили метод _handleLikeButtonClick
   _handleLikeButtonClick() {
     this._likeButton.classList.toggle('element__like-button_active');
   }
 
   // добавили метод _handleDeleteButtonClick
-  handleDeleteButtonClick() {
+  _handleDeleteButtonClick() {
     this._element.remove();
     this._element = null;
   }
-
 }
 
 export { Card }
