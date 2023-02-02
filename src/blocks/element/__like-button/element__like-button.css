@@ -5,7 +5,8 @@
     border: none;
     cursor: pointer;
     align-self: flex-start;
-    margin: 5px 5px 0 0;
+    margin: 22px 20px 0 0;
+    padding: 0;
     opacity: 1;
     transition: opacity .5s linear;
 }

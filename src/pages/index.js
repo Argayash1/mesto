@@ -40,7 +40,6 @@ const api = new Api({
   }
 });
 
-
 // Создаём промис для загрузки информации о пользователе с сервера
 api.getUserInfo()
   .then((result) => {
@@ -95,6 +94,7 @@ const cardList = new Section({
 },
   '.elements-list'
 );
+
 
 // Функции для попапов
 // _______________________________________________________________________________________________________________
@@ -198,6 +198,7 @@ popupDeleteCard.setEventListeners();
 const popupNewAvatar = new PopupWithForm('.popup_type_new-avatar', handleNewAvatarFormSubmit);
 popupNewAvatar.setEventListeners();
 
+
 // Слушатели (обработчики) событий.
 // _______________________________________________________________________________________________________________
 
@@ -222,6 +223,10 @@ profileImageElement.addEventListener('click', function () {
   popupNewAvatarFormValidator.resetValidation();
   popupNewAvatar.open();
 });
+
+
+// Запуск валидации форм
+// _______________________________________________________________________________________________________________
 
 // Запускаем валидацию на форму из попапа профиля
 const popupProfileFormValidator = new FormValidator(config, popupProfileFormElement);
