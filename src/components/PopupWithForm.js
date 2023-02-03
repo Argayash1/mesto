@@ -44,7 +44,7 @@ class PopupWithForm extends Popup {
         this._submitButton = this._form.querySelector('.popup__save');
         this._submitButton.textContent = 'Сохранение...';
     }
-    
+
     loadIsFinished() {
         this._submitButton.textContent = 'Сохранить';
     }

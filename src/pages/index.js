@@ -79,17 +79,11 @@ const createCard = (item) => {
 // 2. Вставляем уже созданный функцией createCard готовый DOM-элемент карточки в список карточек (контейнер 
 // с карточками) 
 const cardList = new Section({
-  renderer: (item) => {
-    // Создаём новую карточку и готовим её к публикации (т. е. создаём уже готовый DOM-элемент карточки) 
-    // с помощью функции createCard  
-    const cardElement = createCard(item);
-    // Нашли в новой карточке (уже созданном с помощью функции createCard DOM-элементе карточки) элемент кнопки 
-    // удаления карточки и сохранили его в переменную deleteButtonElement
-    const deleteButtonElement = cardElement.querySelector('.element__delete-button');
-    // С помощью метода remove удалили из DOM-элемента карточки элемент кнопки удаления карточки
-    deleteButtonElement.remove();
-    // С помощью публичного метода addItem класса Section добавляем готовый DOM-элемент карточки в контейнер
-    cardList.addItem(cardElement);
+  renderer: (item) => {    
+    // С помощью публичного метода addItem класса Section добавляем готовый DOM-элемент карточки в контейнер,
+    // в качестве аргумента передаём вызов функции createCardб которая создаёт новую карточку и готовит её к 
+    // публикации (т. е. создаёт уже готовый DOM-элемент карточки)
+    cardList.addItem(createCard(item));
   },
 },
   '.elements-list'
@@ -105,8 +99,15 @@ function handleOpenPopupImage(name, link) {
 }
 
 // Создаём функцию открытия попапа удаления карточки по клике на кнопку удаления карточки
-function handleOpenPopupDeleteCard() {
+let initialCard = {};
+function handleOpenPopupDeleteCard(cardElement) {
   popupDeleteCard.open();
+  initialCard = cardElement;
+}
+
+function handleDeleteInitialCard() {
+  initialCard.remove();
+  popupDeleteCard.close();
 }
 
 // Создаём функцию сабмита для попапа добавления карточки
@@ -114,8 +115,8 @@ const handleCardFormSubmit = (formValues) => {
   popupCard.waitForTheLoad();
   api.addNewCard(formValues)
     .then((formValues) => {
-      const newCard = createCard(formValues);
-      cardList.addItem(newCard);
+      console.log(formValues.owner._id)
+      cardList.addItem(createCard(formValues));
       popupCard.close();
     })
     .catch((err) => {
@@ -191,7 +192,7 @@ const popupCard = new PopupWithForm('.popup_type_card', handleCardFormSubmit);
 popupCard.setEventListeners();
 
 // Создаём новый экземпляр класса PopupWithConfirmation для попапа удаления карточки
-const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteCardSubmit);
+const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteInitialCard);
 popupDeleteCard.setEventListeners();
 
 // Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара пользователя

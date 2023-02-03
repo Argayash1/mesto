@@ -69,7 +69,7 @@ class FormValidator {
     _toggleButtonState(inputList, buttonElement) {
         // Если есть хотя бы один невалидный инпут
         if (this._hasInvalidInput(inputList)) {
-             // сделай кнопку неактивной
+            // сделай кнопку неактивной
             this.disableSubmitButton(buttonElement);
         } else {
             // иначе сделай кнопку активной
@@ -93,12 +93,12 @@ class FormValidator {
     // увидел, как она здорово работает! 
     resetValidation() {
         this._toggleButtonState(this._inputList, this._submitButton); // <== управляем кнопкой ==
-  
+
         this._inputList.forEach((input) => {
-          this._hideInputError(input) // <==очищаем ошибки ==
+            this._hideInputError(input) // <==очищаем ошибки ==
         });
-  
-      }
+
+    }
 }
 
 export { FormValidator }

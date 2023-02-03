@@ -19,7 +19,7 @@ class Api {
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+    return fetch(this._baseUrl+'/cards', {
       headers: this._headers
     })
       .then(res => {
@@ -51,8 +51,8 @@ class Api {
       });
   }
 
-  deleteCard() {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+  deleteCard(IdOfCard) {
+    return fetch(`${this._baseUrl}/cards/${IdOfCard}`, {
       method: 'DELETE',
       headers: this._headers
     })

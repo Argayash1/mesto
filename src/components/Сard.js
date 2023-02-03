@@ -1,10 +1,12 @@
 class Card {
-  constructor(data, templateSelector, handleOpenPopupImage, handleOpenPopupDeleteCard) {
+  constructor(data, templateSelector, handleCardClick, handleDeleteButtonClick) {
     this._text = data.name;
     this._link = data.link;
+    this._ownerID = data.owner._id;
+    this._id = data._id;
     this._templateSelector = templateSelector; // записали селектор в приватное поле 
-    this._handleOpenPopupImage = handleOpenPopupImage;
-    this._handleOpenPopupDeleteCard = handleOpenPopupDeleteCard;
+    this._handleCardClick = handleCardClick;
+    this._handleDeleteButtonClick = handleDeleteButtonClick;
   }
   //Метод, который найдёт по селектору темплейта темплейт-элемент (шаблон карточки), извлечёт его содержимое,
   //в содержимом найдёт элемент с классом card, клонирует его и вернёт клонированный элемент.
@@ -27,6 +29,7 @@ class Card {
     this._elementImg = this._element.querySelector('.element__image');
 
     this._setEventListeners();
+    this._handleRemoveDeleteButton();
 
     // Добавим данные
     this._elementImg.src = this._link;
@@ -45,12 +48,12 @@ class Card {
 
     this._deleteButton = this._element.querySelector('.element__delete-button');
     this._deleteButton.addEventListener('click', () => {
-      this._handleOpenPopupDeleteCard();
+      this._handleDeleteButtonClick(this._element);
       //this._handleDeleteButtonClick();
     });
 
     this._elementImg.addEventListener('click', () => {
-      this._handleOpenPopupImage(this._text, this._link);
+      this._handleCardClick(this._text, this._link);
     });
   }
 
@@ -64,6 +67,18 @@ class Card {
     this._element.remove();
     this._element = null;
   }
+  e5e16f28355e73761b648f89
+
+  _handleRemoveDeleteButton() {
+    if (this._ownerID != 'e5e16f28355e73761b648f89') {
+      this._deleteButton.classList.add('element__delete-button_hide')
+    }
+    else {
+      return;
+    }
+  } 
 }
+
+
 
 export { Card }
