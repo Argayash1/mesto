@@ -65,7 +65,7 @@ api.getInitialCards()
 // Создаём функцию генерации (создания) карточки
 const createCard = (item) => {
   // Создадим экземпляр карточки
-  const card = new Card(item, '#element-template', handleOpenPopupImage, handleOpenPopupDeleteCard);
+  const card = new Card(item, '#element-template', handleCardClick, handleOpenPopupDeleteCard);
 
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
@@ -94,20 +94,34 @@ const cardList = new Section({
 // _______________________________________________________________________________________________________________
 
 // Создаём функцию открытия попапа показа изображения по клике на картинку карточки
-function handleOpenPopupImage(name, link) {
+function handleCardClick(name, link) {
   popupImage.open(name, link);
 }
 
 // Создаём функцию открытия попапа удаления карточки по клике на кнопку удаления карточки
 let initialCard = {};
-function handleOpenPopupDeleteCard(cardElement) {
+let idOfCard = {}
+function handleOpenPopupDeleteCard(cardElement, cardId) {
   popupDeleteCard.open();
   initialCard = cardElement;
+  idOfCard = cardId;
 }
 
-function handleDeleteInitialCard() {
-  initialCard.remove();
-  popupDeleteCard.close();
+// Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
+// данные которые вписываются пользователем в инпуты в попапе профиля
+const handleProfileFormSubmit = (formValues) => {
+  popupProfile.waitForTheLoad();
+  api.editProfile(formValues)
+    .then((formValues) => {
+      userInfo.setUserInfo(formValues);
+      popupProfile.close();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    })
+    .finally(() => { // В любом случае
+      popupProfile.loadIsFinished();
+    });
 }
 
 // Создаём функцию сабмита для попапа добавления карточки
@@ -115,7 +129,6 @@ const handleCardFormSubmit = (formValues) => {
   popupCard.waitForTheLoad();
   api.addNewCard(formValues)
     .then((formValues) => {
-      console.log(formValues.owner._id)
       cardList.addItem(createCard(formValues));
       popupCard.close();
     })
@@ -128,15 +141,16 @@ const handleCardFormSubmit = (formValues) => {
 }
 
 // Создаём функцию сабмита попапа для удаления карточки
-function handleDeleteCardSubmit() {
-  api.deleteCard(cardId)
-    .then((res) => {
-      console.log(res);
-      popupDeleteCard.close();
-    })
-    .catch((err) => {
-      console.log(err); // выведем ошибку в консоль
-    })
+const handleDeleteCardFormSubmit = () => {
+  api.deleteCard(idOfCard)
+  .then((res) => {
+    initialCard.remove();
+    console.log(res);
+    popupDeleteCard.close();
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  })
 }
 
 // Создаём функцию сабмита попапа для обновления аватара пользователя
@@ -152,23 +166,6 @@ const handleNewAvatarFormSubmit = (formValues) => {
     })
     .finally(() => { // В любом случае
       popupNewAvatar.loadIsFinished();
-    });
-}
-
-// Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
-// данные которые вписываются пользователем в инпуты в попапе профиля
-function handleProfileFormSubmit(formValues) {
-  popupProfile.waitForTheLoad();
-  api.editProfile(formValues)
-    .then((formValues) => {
-      userInfo.setUserInfo(formValues);
-      popupProfile.close();
-    })
-    .catch((err) => {
-      console.log(err); // выведем ошибку в консоль
-    })
-    .finally(() => { // В любом случае
-      popupProfile.loadIsFinished();
     });
 }
 
@@ -192,7 +189,7 @@ const popupCard = new PopupWithForm('.popup_type_card', handleCardFormSubmit);
 popupCard.setEventListeners();
 
 // Создаём новый экземпляр класса PopupWithConfirmation для попапа удаления карточки
-const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteInitialCard);
+const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteCardFormSubmit);
 popupDeleteCard.setEventListeners();
 
 // Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара пользователя
@@ -224,6 +221,10 @@ profileImageElement.addEventListener('click', function () {
   popupNewAvatarFormValidator.resetValidation();
   popupNewAvatar.open();
 });
+
+profileImageElement.addEventListener('mouseover', function() {
+  profileImageElement.classList.add('');
+})
 
 
 // Запуск валидации форм
