@@ -51,6 +51,25 @@ class Api {
       });
   }
 
+  addNewCard(formValues) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: formValues.place,
+        link: formValues.url
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
+
   deleteCard(IdOfCard) {
     return fetch(`${this._baseUrl}/cards/${IdOfCard}`, {
       method: 'DELETE',
@@ -66,14 +85,25 @@ class Api {
       });
   }
 
-  addNewCard(formValues) {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify({
-        name: formValues.place,
-        link: formValues.url
-      })
+  setLike(IdOfCard) {
+    return fetch(`${this._baseUrl}/cards/${IdOfCard}/likes`, {
+      method: 'PUT',
+      headers: this._headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
+
+  deleteLike(IdOfCard) {
+    return fetch(`${this._baseUrl}/cards/${IdOfCard}/likes`, {
+      method: 'DELETE',
+      headers: this._headers
     })
       .then(res => {
         if (res.ok) {

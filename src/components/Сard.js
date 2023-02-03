@@ -1,12 +1,15 @@
 class Card {
-  constructor(data, templateSelector, handleCardClick, handleDeleteButtonClick) {
+  constructor(data, templateSelector, handleCardClick, handleDeleteButtonClick, handleLikeClick, handleDeleteLikeClick) {
     this._text = data.name;
     this._link = data.link;
     this._ownerId = data.owner._id;
     this._id = data._id;
+    this._likes = data.likes;
     this._templateSelector = templateSelector; // записали селектор в приватное поле 
     this._handleCardClick = handleCardClick;
     this._handleDeleteButtonClick = handleDeleteButtonClick;
+    this._handleLikeClick = handleLikeClick;
+    this._handleDeleteLikeClick = handleDeleteLikeClick;
   }
   //Метод, который найдёт по селектору темплейта темплейт-элемент (шаблон карточки), извлечёт его содержимое,
   //в содержимом найдёт элемент с классом card, клонирует его и вернёт клонированный элемент.
@@ -30,6 +33,7 @@ class Card {
 
     this._setEventListeners();
     this._handleRemoveDeleteButton();
+    this._showCountofLikes();
 
     // Добавим данные
     this._elementImg.src = this._link;
@@ -42,8 +46,8 @@ class Card {
 
   _setEventListeners() {
     this._likeButton = this._element.querySelector('.element__like-button');
-    this._likeButton.addEventListener('click', () => {
-      this._handleLikeButtonClick();
+    this._likeButton.addEventListener('click', (e) => {
+      this._toggleLikeButton(e);
     });
 
     this._deleteButton = this._element.querySelector('.element__delete-button');
@@ -71,6 +75,20 @@ class Card {
   _handleRemoveDeleteButton() {
     if (this._ownerId != 'e5e16f28355e73761b648f89') {
       this._deleteButton.classList.add('element__delete-button_hide');
+    }
+  }
+
+  _showCountofLikes() {
+    this._countOfLikes = this._element.querySelector('.element__count-likes');
+    this._countOfLikes.textContent = this._likes.length;
+  }
+
+  _toggleLikeButton =(e) => {
+    if (e.target.classList.contains('element__like-button_active')) {
+      this._handleDeleteLikeClick(this._likeButton, this._id, this._countOfLikes);
+    }
+    else {
+      this._handleLikeClick(this._likeButton, this._id, this._countOfLikes);
     }
   }
 

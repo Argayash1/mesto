@@ -65,7 +65,7 @@ api.getInitialCards()
 // Создаём функцию генерации (создания) карточки
 const createCard = (item) => {
   // Создадим экземпляр карточки
-  const card = new Card(item, '#element-template', handleCardClick, handleOpenPopupDeleteCard);
+  const card = new Card(item, '#element-template', handleCardClick, handleOpenPopupDeleteCard, handleLikeClick, handleLDeleteikeClick);
 
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
@@ -143,9 +143,8 @@ const handleCardFormSubmit = (formValues) => {
 // Создаём функцию сабмита попапа для удаления карточки
 const handleDeleteCardFormSubmit = () => {
   api.deleteCard(idOfCard)
-  .then((res) => {
+  .then(() => {
     initialCard.remove();
-    console.log(res);
     popupDeleteCard.close();
   })
   .catch((err) => {
@@ -169,6 +168,32 @@ const handleNewAvatarFormSubmit = (formValues) => {
     });
 }
 
+
+// Функции постановки и снятие лайка
+// _______________________________________________________________________________________________________________
+
+// Создаём функци. постановки лайка
+const handleLikeClick = (likeButtonElement, cardId, countOfLikes) => {
+  api.setLike(cardId)
+  .then((res) => {
+    likeButtonElement.classList.add('element__like-button_active');
+    countOfLikes.textContent = res.likes.length;
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  })
+}
+
+const handleLDeleteikeClick = (likeButtonElement, cardId, countOfLikes) => {
+  api.deleteLike(cardId)
+  .then((res) => {
+    likeButtonElement.classList.remove('element__like-button_active');
+    countOfLikes.textContent = res.likes.length;
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  })
+}
 
 // Создание экземпляров классов для попапов
 // _______________________________________________________________________________________________________________
