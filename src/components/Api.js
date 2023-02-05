@@ -5,7 +5,7 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(this._baseUrl+'/users/me', {
       headers: this._headers
     })
       .then(res => {
@@ -33,7 +33,7 @@ class Api {
   }
 
   editProfile(formValues) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(this._baseUrl+'/users/me', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -52,7 +52,7 @@ class Api {
   }
 
   addNewCard(formValues) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return fetch(this._baseUrl+'/cards', {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -71,7 +71,7 @@ class Api {
   }
 
   deleteCard(IdOfCard) {
-    return fetch(`${this._baseUrl}/cards/${IdOfCard}`, {
+    return fetch(this._baseUrl+'/cards/'+IdOfCard, {
       method: 'DELETE',
       headers: this._headers
     })
@@ -86,7 +86,7 @@ class Api {
   }
 
   setLike(IdOfCard) {
-    return fetch(`${this._baseUrl}/cards/${IdOfCard}/likes`, {
+    return fetch(this._baseUrl+'/cards/'+IdOfCard+'/likes', {
       method: 'PUT',
       headers: this._headers
     })
@@ -101,7 +101,7 @@ class Api {
   }
 
   deleteLike(IdOfCard) {
-    return fetch(`${this._baseUrl}/cards/${IdOfCard}/likes`, {
+    return fetch(this._baseUrl+'/cards/'+IdOfCard+'/likes', {
       method: 'DELETE',
       headers: this._headers
     })
@@ -116,11 +116,11 @@ class Api {
   }
 
   addNewAvatar(formValues) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return fetch(this._baseUrl+'/users/me/avatar', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: formValues.url,
+        avatar: formValues.url
       })
     })
       .then(res => {

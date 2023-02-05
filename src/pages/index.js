@@ -40,19 +40,12 @@ const api = new Api({
   }
 });
 
-// Создаём промис для загрузки информации о пользователе с сервера
-api.getUserInfo()
-  .then((result) => {
-    userInfo.setUserInfo(result);
-  })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
-
-// Создаём промис для загрузки карточек с сервера
-api.getInitialCards()
-  .then((result) => {
-    cardList.renderItems(result); // С помощью публичного метода renderItems класса Section добавляем готовые DOM-элементы всех карточек в контейнер
+// Создаём Promise.all для загрузки информации о пользователе и массива карточек с сервера
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then((res) => {
+    userInfo.setUserInfo(res[0]); // С помощью публичного метода setUserInfo класса UserInfo
+    cardList.renderItems(res[1]); // С помощью публичного метода renderItems класса Section добавляем готовые
+    // DOM-элементы всех карточек в контейнер
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
@@ -81,7 +74,7 @@ const createCard = (item) => {
 const cardList = new Section({
   renderer: (item) => {    
     // С помощью публичного метода addItem класса Section добавляем готовый DOM-элемент карточки в контейнер,
-    // в качестве аргумента передаём вызов функции createCardб которая создаёт новую карточку и готовит её к 
+    // в качестве аргумента передаём вызов функции createCard, которая создаёт новую карточку и готовит её к 
     // публикации (т. е. создаёт уже готовый DOM-элемент карточки)
     cardList.addItem(createCard(item));
   },
@@ -172,27 +165,33 @@ const handleNewAvatarFormSubmit = (formValues) => {
 // Функции постановки и снятие лайка
 // _______________________________________________________________________________________________________________
 
-// Создаём функци. постановки лайка
+// Создаём функцию постановки лайка
 const handleLikeClick = (likeButtonElement, cardId, countOfLikes) => {
   api.setLike(cardId)
   .then((res) => {
     likeButtonElement.classList.add('element__like-button_active');
-    countOfLikes.textContent = res.likes.length;
+    setCountOfLikes(res, countOfLikes);
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
   })
 }
 
+// Создаём функцию снятия лайка
 const handleLDeleteikeClick = (likeButtonElement, cardId, countOfLikes) => {
   api.deleteLike(cardId)
   .then((res) => {
     likeButtonElement.classList.remove('element__like-button_active');
-    countOfLikes.textContent = res.likes.length;
+    setCountOfLikes(res, countOfLikes);
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
   })
+}
+
+// Создаём функцию установки значения счётчика лайков
+const setCountOfLikes = (res, countOfLikes) => {
+  countOfLikes.textContent = res.likes.length;
 }
 
 // Создание экземпляров классов для попапов
