@@ -1,5 +1,5 @@
 class Card {
-  constructor(data, templateSelector, handleCardClick, handleDeleteButtonClick, handleLikeClick, handleDeleteLikeClick) {
+  constructor(data, templateSelector, handleCardClick, handleDeleteClick, handleLikeClick, handleDeleteLikeClick) {
     this._text = data.name;
     this._link = data.link;
     this._ownerId = data.owner._id;
@@ -7,10 +7,11 @@ class Card {
     this._likes = data.likes;
     this._templateSelector = templateSelector; // записали селектор в приватное поле 
     this._handleCardClick = handleCardClick;
-    this._handleDeleteButtonClick = handleDeleteButtonClick;
+    this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteLikeClick = handleDeleteLikeClick;
   }
+  
   //Метод, который найдёт по селектору темплейта темплейт-элемент (шаблон карточки), извлечёт его содержимое,
   //в содержимом найдёт элемент с классом card, клонирует его и вернёт клонированный элемент.
   _getTemplate() {
@@ -52,7 +53,7 @@ class Card {
 
     this._deleteButton = this._element.querySelector('.element__delete-button');
     this._deleteButton.addEventListener('click', () => {
-      this._handleDeleteButtonClick(this._element, this._id);
+      this._handleDeleteClick(this._element, this._id);
       //this._getSubmitCallBack(handleDeleteCardFormSubmit);
     });
 
@@ -83,7 +84,7 @@ class Card {
     this._countOfLikes.textContent = this._likes.length;
   }
 
-  _toggleLikeButton =(e) => {
+  _toggleLikeButton = (e) => {
     if (e.target.classList.contains('element__like-button_active')) {
       this._handleDeleteLikeClick(this._likeButton, this._id, this._countOfLikes);
     }
