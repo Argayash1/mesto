@@ -20,7 +20,7 @@ class UserInfo {
         return userInfo;
     }
 
-    setUserInfo({ name, about, avatar }) {
+    setUserInfo({ name, about, avatar, _id }) {
         // Присваиваем элементу имени пользователя из блока профиля значение name, которое передаётся а качестве
         // аргумента при вызове метода setUserInfo
         this._nameElement.textContent = name;
@@ -29,6 +29,11 @@ class UserInfo {
         // аргумента при вызове метода setUserInfo
         this._infoElement.textContent = about;
         this._avatarElement.src = avatar;
+        this._id = _id;
+    }
+
+    get_ID() {
+        return this._id;
     }
 
 }

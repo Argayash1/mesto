@@ -1,5 +1,6 @@
-//Импорт массива изображений 
-import initialCards from '../scripts/initialCards.js';
+// Импорты
+// _______________________________________________________________________________________________________________
+ 
 import config from '../scripts/config.js';
 import { Card } from '../components/Сard.js';
 import { FormValidator } from '../components/FormValidator.js';
@@ -10,6 +11,10 @@ import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 import './index.css';
+
+
+// Константы (переменные)
+// _______________________________________________________________________________________________________________
 
 // Попап редактирования профиля
 const popupProfileElement = document.querySelector('.popup_type_profile'); // Нашли попап редактирования профиля в разметке.
@@ -43,7 +48,8 @@ const api = new Api({
 // Создаём Promise.all для загрузки информации о пользователе и массива карточек с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then((res) => {
-    userInfo.setUserInfo(res[0]); // С помощью публичного метода setUserInfo класса UserInfo
+    userInfo.setUserInfo(res[0]); // С помощью публичного метода setUserInfo класса UserInfo принимаем новые данные 
+    // пользователя и добавляем их на страницу.
     cardList.renderItems(res[1]); // С помощью публичного метода renderItems класса Section добавляем готовые
     // DOM-элементы всех карточек в контейнер
   })
@@ -58,7 +64,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 // Создаём функцию генерации (создания) карточки
 const createCard = (item) => {
   // Создадим экземпляр карточки
-  const card = new Card(item, '#element-template', handleCardClick, handleOpenPopupDeleteCard, handleLikeClick, handleLDeleteikeClick);
+  const card = new Card(item, '#element-template', handleCardClick, handleOpenPopupDeleteCard, handleLikeClick, handleLDeleteLikeClick, userInfo.get_ID());
 
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
@@ -166,11 +172,12 @@ const handleNewAvatarFormSubmit = (formValues) => {
 // _______________________________________________________________________________________________________________
 
 // Создаём функцию постановки лайка
-const handleLikeClick = (likeButtonElement, cardId, countOfLikes) => {
+const handleLikeClick = (cardId, card) => {
   api.setLike(cardId)
   .then((res) => {
-    likeButtonElement.classList.add('element__like-button_active');
-    setCountOfLikes(res, countOfLikes);
+    
+    //likeButtonElement.classList.add('element__like-button_active');
+    //setCountOfLikes(res, countOfLikes);
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
@@ -178,9 +185,10 @@ const handleLikeClick = (likeButtonElement, cardId, countOfLikes) => {
 }
 
 // Создаём функцию снятия лайка
-const handleLDeleteikeClick = (likeButtonElement, cardId, countOfLikes) => {
+const handleLDeleteLikeClick = (likeButtonElement, cardId, countOfLikes) => {
   api.deleteLike(cardId)
   .then((res) => {
+    console.log(res);
     likeButtonElement.classList.remove('element__like-button_active');
     setCountOfLikes(res, countOfLikes);
   })

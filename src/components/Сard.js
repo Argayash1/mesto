@@ -1,10 +1,11 @@
 class Card {
-  constructor(data, templateSelector, handleCardClick, handleDeleteClick, handleLikeClick, handleDeleteLikeClick) {
+  constructor(data, templateSelector, handleCardClick, handleDeleteClick, handleLikeClick, handleDeleteLikeClick, userID) {
     this._text = data.name;
     this._link = data.link;
     this._ownerId = data.owner._id;
     this._id = data._id;
     this._likes = data.likes;
+    this._userID = userID;
     this._templateSelector = templateSelector; // записали селектор в приватное поле 
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;
@@ -48,6 +49,7 @@ class Card {
   _setEventListeners() {
     this._likeButton = this._element.querySelector('.element__like-button');
     this._likeButton.addEventListener('click', (e) => {
+      //console.log(e);
       this._toggleLikeButton(e);
     });
 
@@ -74,9 +76,13 @@ class Card {
   }
 
   _handleRemoveDeleteButton() {
-    if (this._ownerId != 'e5e16f28355e73761b648f89') {
+    if (this._ownerId != this._userID) {
       this._deleteButton.classList.add('element__delete-button_hide');
     }
+  }
+
+  setLike() {
+    this._likeButton.classList.add('element__like-button_active');
   }
 
   _showCountofLikes() {
@@ -89,7 +95,7 @@ class Card {
       this._handleDeleteLikeClick(this._likeButton, this._id, this._countOfLikes);
     }
     else {
-      this._handleLikeClick(this._likeButton, this._id, this._countOfLikes);
+      this._handleLikeClick(this._id, this);
     }
   }
 
