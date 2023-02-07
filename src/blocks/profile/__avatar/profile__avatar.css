@@ -4,8 +4,6 @@
     max-height: 120px;
     box-sizing: border-box;
     object-fit: cover;
-    position: relative;
-    z-index: 0;
     opacity: 1;
     transition: opacity .5s linear;
 }
@@ -13,8 +11,5 @@
 .profile__avatar:hover {
     opacity: 0;
 }
-
-
-
 
 
