@@ -119,6 +119,7 @@ const handleProfileFormSubmit = (formValues) => {
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
+      popupProfile.changeSubmitText('Ошибка запроса!');
     })
     .finally(() => { // В любом случае
       setTimeOut(() => popupProfile.enableSubmitButton(), 1500);
@@ -139,6 +140,7 @@ const handleCardFormSubmit = (formValues) => {
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
+      popupCard.changeSubmitText('Ошибка запроса!');
     })
     .finally(() => { // В любом случае
       setTimeOut(() => popupCard.enableSubmitButton(), 1500)
@@ -170,6 +172,7 @@ const handleNewAvatarFormSubmit = (formValues) => {
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
+      popupNewAvatar.changeSubmitText('Ошибка запроса!');
     })
     .finally(() => { // В любом случае
       setTimeOut(() => popupNewAvatar.enableSubmitButton(), 1500)
