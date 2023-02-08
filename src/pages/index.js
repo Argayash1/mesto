@@ -109,33 +109,40 @@ function handleDeleteClick(cardElement, cardId) {
 // Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
 // данные которые вписываются пользователем в инпуты в попапе профиля
 const handleProfileFormSubmit = (formValues) => {
-  popupProfile.waitForTheLoad();
+  popupProfile.changeSubmitText('Сохранение...');
+  popupProfile.disableSubmitButton();
   api.editProfile(formValues)
     .then((formValues) => {
       userInfo.setUserInfo(formValues);
-      popupProfile.close();
+      popupProfile.changeSubmitText('Сохранено!');
+      setTimeout(() => popupProfile.close(), 1000);
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
     .finally(() => { // В любом случае
-      popupProfile.loadIsFinished();
+      setTimeOut(() => popupProfile.enableSubmitButton(), 1500);
+      popupProfile.changeSubmitText('Сохранить');
+
     });
 }
 
 // Создаём функцию сабмита для попапа добавления карточки
 const handleCardFormSubmit = (formValues) => {
-  popupCard.waitForTheLoad();
+  popupCard.changeSubmitText('Создание...');
+  popupCard.disableSubmitButton();
   api.addNewCard(formValues)
     .then((formValues) => {
+      popupCard.changeSubmitText('Создано!');
       cardList.addItem(createCard(formValues));
-      popupCard.close();
+      setTimeout(() => popupCard.close(), 1000);
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
     .finally(() => { // В любом случае
-      popupCard.loadIsFinished();
+      setTimeOut(() => popupCard.enableSubmitButton(), 1500)
+      popupCard.changeSubmitText('Создать');
     });
 }
 
@@ -153,17 +160,20 @@ const handleDeleteCardFormSubmit = () => {
 
 // Создаём функцию сабмита попапа для обновления аватара пользователя
 const handleNewAvatarFormSubmit = (formValues) => {
-  popupNewAvatar.waitForTheLoad();
+  popupNewAvatar.changeSubmitText('Сохранение...');
+  popupNewAvatar.disableSubmitButton();
   api.addNewAvatar(formValues)
     .then((formValues) => {
       profileImageElement.src = formValues.avatar;
-      popupNewAvatar.close();
+      popupNewAvatar.changeSubmitText('Сохранено!');
+      setTimeout(() => popupNewAvatar.close(), 1000);
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
     .finally(() => { // В любом случае
-      popupNewAvatar.loadIsFinished();
+      setTimeOut(() => popupNewAvatar.enableSubmitButton(), 1500)
+      popupNewAvatar.changeSubmitText('Сохранить');
     });
 }
 

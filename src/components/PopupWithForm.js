@@ -40,14 +40,19 @@ class PopupWithForm extends Popup {
         this._form.reset();
     }
 
-    waitForTheLoad() {
+    changeSubmitText(defaultText) {
         this._submitButton = this._form.querySelector('.popup__save');
-        this._submitButton.textContent = 'Сохранение...';
+        this._submitButton.textContent = defaultText;
     }
 
-    loadIsFinished() {
-        this._submitButton.textContent = 'Сохранить';
+    disableSubmitButton() {
+        this._submitButton.disabled = true;  
     }
+
+    enableSubmitButton() {
+        this._submitButton.disabled = false;  
+    }
+
 
 }
 
