@@ -11,7 +11,7 @@ class Card {
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
   }
-  
+
   //Метод, который найдёт по селектору темплейта темплейт-элемент (шаблон карточки), извлечёт его содержимое,
   //в содержимом найдёт элемент с классом card, клонирует его и вернёт клонированный элемент.
   _getTemplate() {
@@ -79,7 +79,7 @@ class Card {
     this._element.remove();
     this._element = null;
   }
-
+  // Добавили метод _handleRemoveDeleteButton
   _handleRemoveDeleteButton() {
     if (this._ownerId != this._userID) {
       this._deleteButton.classList.add('element__delete-button_hide');
@@ -100,9 +100,9 @@ class Card {
     const isLikedByMe = this._likes.some(like => like._id === this._userID);
     return isLikedByMe
   }
-  
+
   setLikesValue(likes) {
-    this._likes=likes;
+    this._likes = likes;
     this._countOfLikes.textContent = likes.length;
   }
 }
