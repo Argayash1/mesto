@@ -32,6 +32,8 @@ const popupСardFormElement = popupCardElement.querySelector('.popup__form_type_
 const popupNewAvatarElement = document.querySelector('.popup_type_new-avatar'); // Нашли попап добавления карточки в разметке.
 const profileImageElement = document.querySelector('.profile__avatar');
 
+// Попап просмотра аватара
+const profileNameElement = document.querySelector('.profile-info__name'); 
 
 // Взаимодействие с API
 // _______________________________________________________________________________________________________________
@@ -204,6 +206,10 @@ const userInfo = new UserInfo({ nameSelector: '.profile-info__name', infoSelecto
 const popupImage = new PopupWithImage('.popup_type_image');
 popupImage.setEventListeners();
 
+// Создаём экземпляр класса PopupWithImage для попапа просмотра аватара (но он ещё не доделан и класс будет другой :) и устанавливаем слушателей в этот экземпляр
+const popupViewAvatar = new PopupWithImage('.popup_type_view-avatar');
+popupViewAvatar.setEventListeners();
+
 // Создаём новый экземпляр класса PopupWithForm для попапа профиля и устанавливаем слушателей в этот экземпляр
 const popupProfile = new PopupWithForm('.popup_type_profile', handleProfileFormSubmit);
 popupProfile.setEventListeners();
@@ -212,13 +218,13 @@ popupProfile.setEventListeners();
 const popupCard = new PopupWithForm('.popup_type_card', handleCardFormSubmit);
 popupCard.setEventListeners();
 
-// Создаём новый экземпляр класса PopupWithConfirmation для попапа удаления карточки
-const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteCardFormSubmit);
-popupDeleteCard.setEventListeners();
-
 // Создаём новый экземпляр класса PopupWithForm для попапа обновления аватара пользователя
 const popupNewAvatar = new PopupWithForm('.popup_type_new-avatar', handleNewAvatarFormSubmit);
 popupNewAvatar.setEventListeners();
+
+// Создаём новый экземпляр класса PopupWithConfirmation для попапа удаления карточки
+const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete-card', handleDeleteCardFormSubmit);
+popupDeleteCard.setEventListeners();
 
 
 // Слушатели (обработчики) событий.
@@ -246,8 +252,9 @@ profileImageElement.addEventListener('click', function () {
   popupNewAvatar.open();
 });
 
-profileImageElement.addEventListener('mouseover', function () {
-  profileImageElement.classList.add('');
+// Слушатель, который открывает попап просмотра аватара пользователя
+profileImageElement.addEventListener('dblclick', function () {
+  popupViewAvatar.open(profileNameElement.textContent, profileImageElement.src);
 })
 
 
