@@ -1,5 +1,5 @@
 class Card {
-  constructor(data, templateSelector, handleCardClick, handleDeleteClick, handleLikeClick, handleDeleteLikeClick, userID) {
+  constructor(data, templateSelector, handleCardClick, handleDeleteClick, handleLikeClick, userID) {
     this._text = data.name;
     this._link = data.link;
     this._ownerId = data.owner._id;
@@ -10,7 +10,6 @@ class Card {
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
-    this._handleDeleteLikeClick = handleDeleteLikeClick;
   }
   
   //Метод, который найдёт по селектору темплейта темплейт-элемент (шаблон карточки), извлечёт его содержимое,
@@ -32,9 +31,12 @@ class Card {
     // Запишем изображение из темлейта (шаблона) в переменную, т. к. 
     // к нему нужно будет обращаться дважды (задавая атрибуты src и alt).
     this._elementImg = this._element.querySelector('.element__image');
+    this._countOfLikes = this._element.querySelector('.element__count-likes');
 
     this._setEventListeners();
     this._handleRemoveDeleteButton();
+    this.isLiked();
+    this._toggleLikeButton();
     this._showCountofLikes();
 
     // Добавим данные
@@ -48,9 +50,12 @@ class Card {
 
   _setEventListeners() {
     this._likeButton = this._element.querySelector('.element__like-button');
-    this._likeButton.addEventListener('click', (e) => {
+    this._likeButton.addEventListener('click', () => {
+      // this._toggleLikeButton();
+      this.isLiked(this._likes);
+      this._handleLikeClick(this._id, this);
       //console.log(e);
-      this._toggleLikeButton(e);
+      // this._toggleLikeButton(e);
     });
 
     this._deleteButton = this._element.querySelector('.element__delete-button');
@@ -65,7 +70,7 @@ class Card {
   }
 
   // добавили метод _handleLikeButtonClick
-  _handleLikeButtonClick() {
+  handleLikeButtonClick = () => {
     this._likeButton.classList.toggle('element__like-button_active');
   }
 
@@ -81,26 +86,24 @@ class Card {
     }
   }
 
-  setLike() {
-    this._likeButton.classList.add('element__like-button_active');
-  }
-
   _showCountofLikes() {
-    this._countOfLikes = this._element.querySelector('.element__count-likes');
     this._countOfLikes.textContent = this._likes.length;
   }
 
-  _toggleLikeButton = (e) => {
-    if (e.target.classList.contains('element__like-button_active')) {
-      this._handleDeleteLikeClick(this._likeButton, this._id, this._countOfLikes);
-    }
-    else {
-      this._handleLikeClick(this._id, this);
+  _toggleLikeButton = () => {
+    if (this.isLiked()) {
+      this.handleLikeButtonClick();
     }
   }
 
-  getSubmitCallBack(handleFormSubmit) {
-    this._handleFormSubmit = handleFormSubmit;
+  isLiked() {
+    const isLikedByMe = this._likes.some(like => like._id === this._userID);
+    return isLikedByMe
+  }
+  
+  setLikesValue(likes) {
+    this._likes=likes;
+    this._countOfLikes.textContent = likes.length;
   }
 }
 

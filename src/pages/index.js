@@ -1,6 +1,6 @@
 // Импорты
 // _______________________________________________________________________________________________________________
- 
+
 import config from '../scripts/config.js';
 import { Card } from '../components/Сard.js';
 import { FormValidator } from '../components/FormValidator.js';
@@ -64,7 +64,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 // Создаём функцию генерации (создания) карточки
 const createCard = (item) => {
   // Создадим экземпляр карточки
-  const card = new Card(item, '#element-template', handleCardClick, handleOpenPopupDeleteCard, handleLikeClick, handleLDeleteLikeClick, userInfo.get_ID());
+  const card = new Card(item, '#element-template', handleCardClick, handleDeleteClick, handleLikeClick, userInfo.get_ID());
 
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
@@ -78,7 +78,7 @@ const createCard = (item) => {
 // 2. Вставляем уже созданный функцией createCard готовый DOM-элемент карточки в список карточек (контейнер 
 // с карточками) 
 const cardList = new Section({
-  renderer: (item) => {    
+  renderer: (item) => {
     // С помощью публичного метода addItem класса Section добавляем готовый DOM-элемент карточки в контейнер,
     // в качестве аргумента передаём вызов функции createCard, которая создаёт новую карточку и готовит её к 
     // публикации (т. е. создаёт уже готовый DOM-элемент карточки)
@@ -89,7 +89,7 @@ const cardList = new Section({
 );
 
 
-// Функции для попапов
+// Функции для попапов и лайков
 // _______________________________________________________________________________________________________________
 
 // Создаём функцию открытия попапа показа изображения по клике на картинку карточки
@@ -100,7 +100,7 @@ function handleCardClick(name, link) {
 // Создаём функцию открытия попапа удаления карточки по клике на кнопку удаления карточки
 let initialCard = {};
 let idOfCard = {}
-function handleOpenPopupDeleteCard(cardElement, cardId) {
+function handleDeleteClick(cardElement, cardId) {
   popupDeleteCard.open();
   initialCard = cardElement;
   idOfCard = cardId;
@@ -142,13 +142,13 @@ const handleCardFormSubmit = (formValues) => {
 // Создаём функцию сабмита попапа для удаления карточки
 const handleDeleteCardFormSubmit = () => {
   api.deleteCard(idOfCard)
-  .then(() => {
-    initialCard.remove();
-    popupDeleteCard.close();
-  })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  })
+    .then(() => {
+      initialCard.remove();
+      popupDeleteCard.close();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    })
 }
 
 // Создаём функцию сабмита попапа для обновления аватара пользователя
@@ -167,40 +167,19 @@ const handleNewAvatarFormSubmit = (formValues) => {
     });
 }
 
-
-// Функции постановки и снятие лайка
-// _______________________________________________________________________________________________________________
-
-// Создаём функцию постановки лайка
+// Создаём функцию постановки/снятия лайка
 const handleLikeClick = (cardId, card) => {
-  api.setLike(cardId)
-  .then((res) => {
-    
-    //likeButtonElement.classList.add('element__like-button_active');
-    //setCountOfLikes(res, countOfLikes);
-  })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  })
-}
+  const method = card.isLiked() ? 'DELETE' : 'PUT'
+    api.setLike(cardId, method)
+    .then((res) => {
+      card.handleLikeButtonClick();
+      card.setLikesValue(res.likes);
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    })
+  }
 
-// Создаём функцию снятия лайка
-const handleLDeleteLikeClick = (likeButtonElement, cardId, countOfLikes) => {
-  api.deleteLike(cardId)
-  .then((res) => {
-    console.log(res);
-    likeButtonElement.classList.remove('element__like-button_active');
-    setCountOfLikes(res, countOfLikes);
-  })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  })
-}
-
-// Создаём функцию установки значения счётчика лайков
-const setCountOfLikes = (res, countOfLikes) => {
-  countOfLikes.textContent = res.likes.length;
-}
 
 // Создание экземпляров классов для попапов
 // _______________________________________________________________________________________________________________
@@ -254,7 +233,7 @@ profileImageElement.addEventListener('click', function () {
   popupNewAvatar.open();
 });
 
-profileImageElement.addEventListener('mouseover', function() {
+profileImageElement.addEventListener('mouseover', function () {
   profileImageElement.classList.add('');
 })
 
