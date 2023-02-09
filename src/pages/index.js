@@ -49,10 +49,10 @@ const api = new Api({
 
 // Создаём Promise.all для загрузки информации о пользователе и массива карточек с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
-  .then((res) => {
-    userInfo.setUserInfo(res[0]); // С помощью публичного метода setUserInfo класса UserInfo принимаем новые данные 
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo(userData); // С помощью публичного метода setUserInfo класса UserInfo принимаем новые данные 
     // пользователя и добавляем их на страницу.
-    cardList.renderItems(res[1]); // С помощью публичного метода renderItems класса Section добавляем готовые
+    cardList.renderItems(cards); // С помощью публичного метода renderItems класса Section добавляем готовые
     // DOM-элементы всех карточек в контейнер
   })
   .catch((err) => {
@@ -100,11 +100,11 @@ function handleCardClick(name, link) {
 }
 
 // Создаём функцию открытия попапа удаления карточки по клике на кнопку удаления карточки
-let initialCard = {};
+let cardToDelete = {};
 let idOfCard = {}
 function handleDeleteClick(cardElement, cardId) {
   popupDeleteCard.open();
-  initialCard = cardElement;
+  cardToDelete = cardElement;
   idOfCard = cardId;
 }
 
@@ -154,7 +154,7 @@ const handleCardFormSubmit = (formValues) => {
 const handleDeleteCardFormSubmit = () => {
   api.deleteCard(idOfCard)
     .then(() => {
-      initialCard.remove();
+      cardToDelete.remove();
       popupDeleteCard.close();
     })
     .catch((err) => {

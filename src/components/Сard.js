@@ -31,7 +31,9 @@ class Card {
     // Запишем изображение из темлейта (шаблона) в переменную, т. к. 
     // к нему нужно будет обращаться дважды (задавая атрибуты src и alt).
     this._elementImg = this._element.querySelector('.element__image');
+    this._likeButton = this._element.querySelector('.element__like-button');
     this._countOfLikes = this._element.querySelector('.element__count-likes');
+    this._deleteButton = this._element.querySelector('.element__delete-button');
 
     this._setEventListeners();
     this._handleRemoveDeleteButton();
@@ -49,7 +51,6 @@ class Card {
   }
 
   _setEventListeners() {
-    this._likeButton = this._element.querySelector('.element__like-button');
     this._likeButton.addEventListener('click', () => {
       // this._toggleLikeButton();
       this.isLiked(this._likes);
@@ -58,7 +59,6 @@ class Card {
       // this._toggleLikeButton(e);
     });
 
-    this._deleteButton = this._element.querySelector('.element__delete-button');
     this._deleteButton.addEventListener('click', () => {
       this._handleDeleteClick(this._element, this._id);
       //this._getSubmitCallBack(handleDeleteCardFormSubmit);
