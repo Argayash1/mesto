@@ -4,32 +4,27 @@ class Api {
     this._headers = options.headers;
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+
+    // если ошибка, отклоняем промис
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   getUserInfo() {
     return fetch(this._baseUrl + '/users/me', {
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse)
   }
 
   getInitialCards() {
     return fetch(this._baseUrl + '/cards', {
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse)
   }
 
   editProfile(formValues) {
@@ -41,14 +36,7 @@ class Api {
         about: formValues.about
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse)
   }
 
   addNewCard(formValues) {
@@ -60,14 +48,7 @@ class Api {
         link: formValues.url
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse)
   }
 
   deleteCard(IdOfCard) {
@@ -75,14 +56,7 @@ class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse)
   }
 
   setLike(cardId, method) {
@@ -90,14 +64,7 @@ class Api {
       method: method,
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse)
   }
 
   addNewAvatar(formValues) {
@@ -108,14 +75,7 @@ class Api {
         avatar: formValues.url
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse)
   }
 }
 
