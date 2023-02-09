@@ -1,6 +1,7 @@
 // Импорты
 // _______________________________________________________________________________________________________________
 
+import './index.css';
 import config from '../scripts/config.js';
 import { Card } from '../components/Сard.js';
 import { FormValidator } from '../components/FormValidator.js';
@@ -10,7 +11,6 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
-import './index.css';
 
 
 // Константы (переменные)
@@ -33,7 +33,7 @@ const popupNewAvatarElement = document.querySelector('.popup_type_new-avatar'); 
 const profileImageElement = document.querySelector('.profile__avatar');
 
 // Попап просмотра аватара
-const profileNameElement = document.querySelector('.profile-info__name'); 
+const profileNameElement = document.querySelector('.profile-info__name');
 
 // Взаимодействие с API
 // _______________________________________________________________________________________________________________
@@ -124,7 +124,7 @@ const handleProfileFormSubmit = (formValues) => {
       popupProfile.changeSubmitText('Ошибка запроса!');
     })
     .finally(() => { // В любом случае
-      setTimeOut(() => popupProfile.enableSubmitButton(), 1500);
+      setTimeout(() => popupProfile.enableSubmitButton(), 1500);
       popupProfile.changeSubmitText('Сохранить');
 
     });
@@ -145,7 +145,7 @@ const handleCardFormSubmit = (formValues) => {
       popupCard.changeSubmitText('Ошибка запроса!');
     })
     .finally(() => { // В любом случае
-      setTimeOut(() => popupCard.enableSubmitButton(), 1500)
+      setTimeout(() => popupCard.enableSubmitButton(), 1500)
       popupCard.changeSubmitText('Создать');
     });
 }
@@ -177,7 +177,7 @@ const handleNewAvatarFormSubmit = (formValues) => {
       popupNewAvatar.changeSubmitText('Ошибка запроса!');
     })
     .finally(() => { // В любом случае
-      setTimeOut(() => popupNewAvatar.enableSubmitButton(), 1500)
+      setTimeout(() => popupNewAvatar.enableSubmitButton(), 1500)
       popupNewAvatar.changeSubmitText('Сохранить');
     });
 }
@@ -185,7 +185,7 @@ const handleNewAvatarFormSubmit = (formValues) => {
 // Создаём функцию постановки/снятия лайка
 const handleLikeClick = (cardId, card) => {
   const method = card.isLiked() ? 'DELETE' : 'PUT'
-    api.setLike(cardId, method)
+  api.setLike(cardId, method)
     .then((res) => {
       card.handleLikeButtonClick();
       card.setLikesValue(res.likes);
@@ -193,7 +193,7 @@ const handleLikeClick = (cardId, card) => {
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
-  }
+}
 
 
 // Создание экземпляров классов для попапов
