@@ -32,7 +32,7 @@ class UserInfo {
         this._id = _id;
     }
 
-    get_ID() {
+    getId() {
         return this._id;
     }
 

@@ -13,22 +13,25 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  // Огромное Вам спасибо за этот метод, с большим интересом разобрался и использовал его!
+  _request(url, options) {
+    return fetch(url, options).then(this._checkResponse)
+  }
+
   getUserInfo() {
-    return fetch(this._baseUrl + '/users/me', {
+    return this._request(this._baseUrl + '/users/me', {
       headers: this._headers
     })
-    .then(this._checkResponse)
   }
 
   getInitialCards() {
-    return fetch(this._baseUrl + '/cards', {
+    return this._request(this._baseUrl + '/cards', {
       headers: this._headers
     })
-    .then(this._checkResponse)
   }
 
   editProfile(formValues) {
-    return fetch(this._baseUrl + '/users/me', {
+    return this._request(this._baseUrl + '/users/me', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -36,11 +39,10 @@ class Api {
         about: formValues.about
       })
     })
-    .then(this._checkResponse)
   }
 
   addNewCard(formValues) {
-    return fetch(this._baseUrl + '/cards', {
+    return this._request(this._baseUrl + '/cards', {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -48,34 +50,30 @@ class Api {
         link: formValues.url
       })
     })
-    .then(this._checkResponse)
   }
 
-  deleteCard(IdOfCard) {
-    return fetch(this._baseUrl + '/cards/' + IdOfCard, {
+  deleteCard(cardId) {
+    return this._request(this._baseUrl + '/cards/' + cardId, {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(this._checkResponse)
   }
 
   setLike(cardId, method) {
-    return fetch(this._baseUrl + '/cards/' + cardId + '/likes', {
+    return this._request(this._baseUrl + '/cards/' + cardId + '/likes', {
       method: method,
       headers: this._headers
     })
-    .then(this._checkResponse)
   }
 
   addNewAvatar(formValues) {
-    return fetch(this._baseUrl + '/users/me/avatar', {
+    return this._request(this._baseUrl + '/users/me/avatar', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         avatar: formValues.url
       })
     })
-    .then(this._checkResponse)
   }
 }
 

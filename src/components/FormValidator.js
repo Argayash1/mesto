@@ -66,14 +66,14 @@ class FormValidator {
     // Создаём функцию активирования (раздизэйблить) и деактивирования (задизэйблить) кнопки 
     // Функция принимает массив полей ввода
     // и элемент кнопки, состояние которой нужно менять
-    _toggleButtonState(inputList, buttonElement) {
+    _toggleButtonState() {
         // Если есть хотя бы один невалидный инпут
-        if (this._hasInvalidInput(inputList)) {
+        if (this._hasInvalidInput(this._inputList)) {
             // сделай кнопку неактивной
-            this.disableSubmitButton(buttonElement);
+            this.disableSubmitButton(this._submitButton);
         } else {
             // иначе сделай кнопку активной
-            this.enableSubmitButton(buttonElement);
+            this.enableSubmitButton(this._submitButton);
         }
     };
 
@@ -92,7 +92,7 @@ class FormValidator {
     // Огромное Вам спасибо, какая же интересная функция! Повозился с ней немного, и когда разобрался,
     // увидел, как она здорово работает! 
     resetValidation() {
-        this._toggleButtonState(this._inputList, this._submitButton); // <== управляем кнопкой ==
+        this._toggleButtonState(); // <== управляем кнопкой == this._inputList, this._submitButton
 
         this._inputList.forEach((input) => {
             this._hideInputError(input) // <==очищаем ошибки ==

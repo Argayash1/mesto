@@ -17,16 +17,14 @@ import { Api } from '../components/Api.js';
 // _______________________________________________________________________________________________________________
 
 // Попап редактирования профиля
-const popupProfileElement = document.querySelector('.popup_type_profile'); // Нашли попап редактирования профиля в разметке.
-const popupProfileOpenButtonElement = document.querySelector('.profile-info__edit-button'); // Нашли кнопку открытия попапа редактирования профиля.
-const popupProfileFormElement = popupProfileElement.querySelector('.popup__form_type_profile'); //Нашли форму в попапе редактирования профиля
+const popupProfileOpenButtonElement = document.querySelector('.profile-info__edit-button') ; // Нашли кнопку открытия попапа редактирования профиля.
+const popupProfileFormElement = document.forms["profile-popupform"]; //Нашли форму в попапе редактирования профиля
 const nameInput = popupProfileFormElement.querySelector('input[name="name"]'); //Нашли инпут для имени в форме
 const jobInput = popupProfileFormElement.querySelector('input[name="about"]'); //Нашли инпут для профессии в форме
 
-// Попап добавления карточки
-const popupCardElement = document.querySelector('.popup_type_card'); // Нашли попап добавления карточки в разметке.  
+// Попап добавления карточки  
 const popupCardOpenButtonElement = document.querySelector('.profile__add-button'); // Нашли кнопку открытия попапа добавления карточки
-const popupСardFormElement = popupCardElement.querySelector('.popup__form_type_card'); //Нашли форму в попапе добавления карточки
+const popupСardFormElement = document.forms["card-popupform"]; //Нашли форму в попапе добавления карточки
 
 // Попап обновления аватара
 const popupNewAvatarElement = document.querySelector('.popup_type_new-avatar'); // Нашли попап добавления карточки в разметке.
@@ -66,7 +64,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 // Создаём функцию генерации (создания) карточки
 const createCard = (item) => {
   // Создадим экземпляр карточки
-  const card = new Card(item, '#element-template', handleCardClick, handleDeleteClick, handleLikeClick, userInfo.get_ID());
+  const card = new Card(item, '#element-template', handleCardClick, handleDeleteClick, handleLikeClick, userInfo.getId());
 
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();

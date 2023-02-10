@@ -9,6 +9,8 @@ class PopupWithForm extends Popup {
         // достаём (находим) все элементы полей
         this._inputList = this._popupElement.querySelectorAll('.popup__input');
         this._submitButton = this._form.querySelector('.popup__save');
+        // фиксируем начальный текст кнопки 1 раз в конструкторе
+        this._submitButtonText = this._submitButton.textContent; 
     }
 
     _getInputValues() {
