@@ -55,7 +55,14 @@ class PopupWithForm extends Popup {
         this._submitButton.disabled = false;  
     }
 
-
+    // указываем 2 параметра (2й с текстом по умолчанию, чтобы не указывать лишний раз его)
+  renderLoading(isLoading, loadingText='Сохранение...') {
+    if (isLoading) {
+        this._submitButton.textContent = loadingText;
+    } else {
+        this._submitButton.textContent = this._submitButtonText;
+    }
+  }
 }
 
 export { PopupWithForm }

@@ -17,7 +17,7 @@ import { Api } from '../components/Api.js';
 // _______________________________________________________________________________________________________________
 
 // Попап редактирования профиля
-const popupProfileOpenButtonElement = document.querySelector('.profile-info__edit-button') ; // Нашли кнопку открытия попапа редактирования профиля.
+const popupProfileOpenButtonElement = document.querySelector('.profile-info__edit-button'); // Нашли кнопку открытия попапа редактирования профиля.
 const popupProfileFormElement = document.forms["profile-popupform"]; //Нашли форму в попапе редактирования профиля
 const nameInput = popupProfileFormElement.querySelector('input[name="name"]'); //Нашли инпут для имени в форме
 const jobInput = popupProfileFormElement.querySelector('input[name="about"]'); //Нашли инпут для профессии в форме
@@ -109,42 +109,47 @@ function handleDeleteClick(cardElement, cardId) {
 // Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
 // данные которые вписываются пользователем в инпуты в попапе профиля
 const handleProfileFormSubmit = (formValues) => {
-  popupProfile.changeSubmitText('Сохранение...');
+  popupProfile.renderLoading(true);
   popupProfile.disableSubmitButton();
   api.editProfile(formValues)
-    .then((formValues) => {
-      userInfo.setUserInfo(formValues);
-      popupProfile.changeSubmitText('Сохранено!');
+    .then((userData) => {
+      userInfo.setUserInfo(userData);
+      popupProfile.renderLoading(true, 'Сохранено!');
       setTimeout(() => popupProfile.close(), 1000);
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
-      popupProfile.changeSubmitText('Ошибка запроса!');
+      popupProfile.renderLoading(true, 'Ошибка запроса!');
     })
     .finally(() => { // В любом случае
-      setTimeout(() => popupProfile.enableSubmitButton(), 1500);
-      popupProfile.changeSubmitText('Сохранить');
-
+      setTimeout(() => {
+        popupProfile.enableSubmitButton();
+        popupProfile.renderLoading(false);
+      },
+        1500);
     });
 }
 
 // Создаём функцию сабмита для попапа добавления карточки
 const handleCardFormSubmit = (formValues) => {
-  popupCard.changeSubmitText('Создание...');
+  popupCard.renderLoading(true);
   popupCard.disableSubmitButton();
   api.addNewCard(formValues)
-    .then((formValues) => {
-      popupCard.changeSubmitText('Создано!');
-      cardList.addItem(createCard(formValues));
+    .then((cardData) => {
+      popupCard.renderLoading(true, 'Создано!');
+      cardList.addItem(createCard(cardData));
       setTimeout(() => popupCard.close(), 1000);
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
-      popupCard.changeSubmitText('Ошибка запроса!');
+      popupCard.renderLoading(true, 'Ошибка запроса!');
     })
     .finally(() => { // В любом случае
-      setTimeout(() => popupCard.enableSubmitButton(), 1500)
-      popupCard.changeSubmitText('Создать');
+      setTimeout(() => {
+        popupCard.enableSubmitButton();
+        popupCard.renderLoading(false);
+      },
+        1500)
     });
 }
 
@@ -162,21 +167,24 @@ const handleDeleteCardFormSubmit = () => {
 
 // Создаём функцию сабмита попапа для обновления аватара пользователя
 const handleNewAvatarFormSubmit = (formValues) => {
-  popupNewAvatar.changeSubmitText('Сохранение...');
+  popupNewAvatar.renderLoading(true);
   popupNewAvatar.disableSubmitButton();
   api.addNewAvatar(formValues)
-    .then((formValues) => {
-      profileImageElement.src = formValues.avatar;
-      popupNewAvatar.changeSubmitText('Сохранено!');
+    .then((userData) => {
+      profileImageElement.src = userData.avatar;
+      popupNewAvatar.renderLoading(true, 'Сохранено!');
       setTimeout(() => popupNewAvatar.close(), 1000);
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
-      popupNewAvatar.changeSubmitText('Ошибка запроса!');
+      popupNewAvatar.renderLoading(true, 'Ошибка запроса!');
     })
     .finally(() => { // В любом случае
-      setTimeout(() => popupNewAvatar.enableSubmitButton(), 1500)
-      popupNewAvatar.changeSubmitText('Сохранить');
+      setTimeout(() => {
+        popupNewAvatar.enableSubmitButton();
+        popupNewAvatar.renderLoading(false);
+      },
+        1500)
     });
 }
 
