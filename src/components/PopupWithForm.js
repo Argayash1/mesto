@@ -26,6 +26,16 @@ class PopupWithForm extends Popup {
         // возвращаем объект значений
         return formValues;
     }
+    // Этим методом со мной поделился коллега по группе, спасибо ему :)
+    // Создаём метод, который присваивает свойству value` каждого из инпутов значения из элементов имени пользователя  
+    // и информации о себе из блока профиля, сохранённые в объект с помощью вызова метода getUserInfo из класса 
+    // UserInfo, который передаётся как аргумент при вызове метода setInputValues  
+    setInputValues(userData) {
+        this._inputList.forEach(input => {
+            // присваиваем `value` инпута данные из объекта по атрибуту `name` этого инпута
+            input.value = userData[input.name];
+        });
+    }
 
     setEventListeners() {
         super.setEventListeners();

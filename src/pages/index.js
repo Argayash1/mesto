@@ -240,9 +240,7 @@ popupDeleteCard.setEventListeners();
 // Слушатель, который запускает функцию открытия попапа редактирования профиля по клику на кнопке edit и делает так,  
 // чтобы инпуты в форме попапа приняли текстовые значения из блока профиля для имени и професии
 popupProfileOpenButtonElement.addEventListener('click', function () {
-  const userData = userInfo.getUserInfo();
-  nameInput.value = userData.name;
-  jobInput.value = userData.info;
+  popupProfile.setInputValues(userInfo.getUserInfo());
   popupProfileFormValidator.resetValidation();
   popupProfile.open();
 });
