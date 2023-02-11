@@ -61,28 +61,23 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 // Создание карточек
 // _______________________________________________________________________________________________________________
 
-// Создаём функцию генерации (создания) карточки
-const createCard = (item) => {
-  // Создадим экземпляр карточки
-  const card = new Card(item, '#element-template', handleCardClick, handleDeleteClick, handleLikeClick, userInfo.getId());
-
-  // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateCard();
-
-  return cardElement;
-}
-
 // Создаём эеземпляр класса Section, то есть списка карточек: 
-// 1. С помощью функции createCard cоздаём и сохранякем в переменную карточку на основе объекта из 
-// импортированного массива initialCards, который содержит объекты с полями name и link
-// 2. Вставляем уже созданный функцией createCard готовый DOM-элемент карточки в список карточек (контейнер 
-// с карточками) 
+// С помощью функции renderer cоздаём и возвращаем экземпляр карточки на основе объекта из массива карточек,
+// полученных с сервера. Этот массив содержит 30 последних карточек, созданных пользователями на сервере. Каждая 
+// карточка представляет с собой объект с полями name и link.
 const cardList = new Section({
   renderer: (item) => {
+    // Создадим экземпляр карточки
+    const card = new Card(item, '#element-template', handleCardClick, handleDeleteClick, handleLikeClick, userInfo.getId());
+
+    // Создаём карточку и возвращаем наружу
+    const cardElement = card.generateCard();
+
+    return cardElement;
     // С помощью публичного метода addItem класса Section добавляем готовый DOM-элемент карточки в контейнер,
     // в качестве аргумента передаём вызов функции createCard, которая создаёт новую карточку и готовит её к 
     // публикации (т. е. создаёт уже готовый DOM-элемент карточки)
-    cardList.addItem(createCard(item));
+    // cardList.addItem(createCard(item));
   },
 },
   '.elements-list'
@@ -98,12 +93,8 @@ function handleCardClick(name, link) {
 }
 
 // Создаём функцию открытия попапа удаления карточки по клике на кнопку удаления карточки
-let cardToDelete = {};
-let idOfCard = {}
 function handleDeleteClick(cardElement, cardId) {
-  popupDeleteCard.open();
-  cardToDelete = cardElement;
-  idOfCard = cardId;
+  popupDeleteCard.open(cardElement, cardId);
 }
 
 // Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
@@ -137,7 +128,7 @@ const handleCardFormSubmit = (formValues) => {
   api.addNewCard(formValues)
     .then((cardData) => {
       popupCard.renderLoading(true, 'Создано!');
-      cardList.addItem(createCard(cardData));
+      cardList.addItem(cardData);
       setTimeout(() => popupCard.close(), 1000);
     })
     .catch((err) => {
@@ -154,15 +145,25 @@ const handleCardFormSubmit = (formValues) => {
 }
 
 // Создаём функцию сабмита попапа для удаления карточки
-const handleDeleteCardFormSubmit = () => {
-  api.deleteCard(idOfCard)
+const handleDeleteCardFormSubmit = (cardElement, cardId) => {
+  popupDeleteCard.renderLoading(true);
+  popupDeleteCard.disableSubmitButton();
+  api.deleteCard(cardId)
     .then(() => {
-      cardToDelete.remove();
+      popupDeleteCard.renderLoading(true, 'Удалено!');
+      cardElement.remove();
       popupDeleteCard.close();
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
+    .finally(() => { // В любом случае
+      setTimeout(() => {
+        popupDeleteCard.enableSubmitButton();
+        popupDeleteCard.renderLoading(false);
+      },
+        1500)
+    });
 }
 
 // Создаём функцию сабмита попапа для обновления аватара пользователя

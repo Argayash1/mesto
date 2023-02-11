@@ -5,6 +5,9 @@ class PopupWithConfirmation extends Popup {
         super(popupSelector);
         this._handleFormSubmit = handleFormSubmit;
         this._form = this._popupElement.querySelector('.popup__form');
+        this._submitButton = this._form.querySelector('.popup__save');
+        // фиксируем начальный текст кнопки 1 раз в конструкторе
+        this._submitButtonText = this._submitButton.textContent;
     }
 
     setEventListeners() {
@@ -13,8 +16,30 @@ class PopupWithConfirmation extends Popup {
             e.preventDefault();
 
             // добавим вызов функции _handleFormSubmit
-            this._handleFormSubmit();
+            this._handleFormSubmit(this._cardElement, this._cardId);
         });
+    }
+
+    open(cardElement, cardId) {
+        super.open();
+        this._cardElement = cardElement;
+        this._cardId = cardId;
+    }
+
+    disableSubmitButton() {
+        this._submitButton.disabled = true;
+    }
+
+    enableSubmitButton() {
+        this._submitButton.disabled = false;
+    }
+
+    renderLoading(isLoading, loadingText = 'Удаление...') {
+        if (isLoading) {
+            this._submitButton.textContent = loadingText;
+        } else {
+            this._submitButton.textContent = this._submitButtonText;
+        }
     }
 }
 

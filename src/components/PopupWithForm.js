@@ -10,7 +10,7 @@ class PopupWithForm extends Popup {
         this._inputList = this._popupElement.querySelectorAll('.popup__input');
         this._submitButton = this._form.querySelector('.popup__save');
         // фиксируем начальный текст кнопки 1 раз в конструкторе
-        this._submitButtonText = this._submitButton.textContent; 
+        this._submitButtonText = this._submitButton.textContent;
     }
 
     _getInputValues() {
@@ -43,26 +43,24 @@ class PopupWithForm extends Popup {
         this._form.reset();
     }
 
-    changeSubmitText(defaultText) {
-        this._submitButton.textContent = defaultText;
-    }
-
     disableSubmitButton() {
-        this._submitButton.disabled = true;  
+        this._submitButton.disabled = true;
     }
 
     enableSubmitButton() {
-        this._submitButton.disabled = false;  
+        this._submitButton.disabled = false;
     }
 
+    // Спасибо Вам большое за этот замечательный метод! С удовольствием освоил его и узнал, что, оказывается, 
+    // функции можно задавать параметры по умолчанию. В теории в тренажёре об этом, по-моему, не говорилось.
     // указываем 2 параметра (2й с текстом по умолчанию, чтобы не указывать лишний раз его)
-  renderLoading(isLoading, loadingText='Сохранение...') {
-    if (isLoading) {
-        this._submitButton.textContent = loadingText;
-    } else {
-        this._submitButton.textContent = this._submitButtonText;
+    renderLoading(isLoading, loadingText = 'Сохранение...') {
+        if (isLoading) {
+            this._submitButton.textContent = loadingText;
+        } else {
+            this._submitButton.textContent = this._submitButtonText;
+        }
     }
-  }
 }
 
 export { PopupWithForm }
