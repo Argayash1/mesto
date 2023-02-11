@@ -2,7 +2,8 @@
 // _______________________________________________________________________________________________________________
 
 import './index.css';
-import config from '../scripts/config.js';
+import config from '../utils/config.js';
+import { popupProfileOpenButtonElement, popupCardOpenButtonElement, profileImageElement } from '../utils/constants.js';
 import { Card } from '../components/Сard.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
@@ -12,22 +13,6 @@ import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 
-
-// Константы (переменные)
-// _______________________________________________________________________________________________________________
-
-// Попап редактирования профиля
-const popupProfileOpenButtonElement = document.querySelector('.profile-info__edit-button'); // Нашли кнопку открытия попапа редактирования профиля.
-
-// Попап добавления карточки  
-const popupCardOpenButtonElement = document.querySelector('.profile__add-button'); // Нашли кнопку открытия попапа добавления карточки
-
-// Попап обновления аватара
-const profileImageElement = document.querySelector('.profile__avatar'); // Нашли аватар в блоке профиля
-
-
-// Попап просмотра аватара
-// const profileNameElement = document.querySelector('.profile-info__name'); // Нашли элемент с именем пользователя в блоке профиля
 
 // Взаимодействие с API
 // _______________________________________________________________________________________________________________
@@ -292,4 +277,3 @@ const enableValidation = (config) => {
 
 // Вызываем (запускаем) общую для всех форм в проекте функцию включения валидации
 enableValidation(config);
-
