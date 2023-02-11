@@ -19,19 +19,17 @@ import { Api } from '../components/Api.js';
 // Попап редактирования профиля
 const popupProfileOpenButtonElement = document.querySelector('.profile-info__edit-button'); // Нашли кнопку открытия попапа редактирования профиля.
 const popupProfileFormElement = document.forms["profile-popupform"]; //Нашли форму в попапе редактирования профиля
-const nameInput = popupProfileFormElement.querySelector('input[name="name"]'); //Нашли инпут для имени в форме
-const jobInput = popupProfileFormElement.querySelector('input[name="about"]'); //Нашли инпут для профессии в форме
 
 // Попап добавления карточки  
 const popupCardOpenButtonElement = document.querySelector('.profile__add-button'); // Нашли кнопку открытия попапа добавления карточки
 const popupСardFormElement = document.forms["card-popupform"]; //Нашли форму в попапе добавления карточки
 
 // Попап обновления аватара
-const popupNewAvatarElement = document.querySelector('.popup_type_new-avatar'); // Нашли попап добавления карточки в разметке.
-const profileImageElement = document.querySelector('.profile__avatar');
+const profileImageElement = document.querySelector('.profile__avatar'); // Нашли аватар в блоке профиля
+const popupNewAvatarFormElement = document.forms['new-avatar-popupform']; // Нашли форму в попапе обновления аватара
 
 // Попап просмотра аватара
-const profileNameElement = document.querySelector('.profile-info__name');
+const profileNameElement = document.querySelector('.profile-info__name'); // Нашли элемент с именем пользователя в блоке профиля
 
 // Взаимодействие с API
 // _______________________________________________________________________________________________________________
@@ -90,12 +88,12 @@ const cardList = new Section({
 // Создаём функцию открытия попапа показа изображения по клике на картинку карточки
 function handleCardClick(name, link) {
   popupImage.open(name, link);
-}
+};
 
 // Создаём функцию открытия попапа удаления карточки по клике на кнопку удаления карточки
-function handleDeleteClick(cardElement, cardId) {
-  popupDeleteCard.open(cardElement, cardId);
-}
+function handleDeleteClick(card) {
+  popupDeleteCard.open(card);
+};
 
 // Создаём функцию сабмита для попапа профиля, которая вносит изменения в имя и профессию в блоке профиля, записывая 
 // данные которые вписываются пользователем в инпуты в попапе профиля
@@ -119,7 +117,7 @@ const handleProfileFormSubmit = (formValues) => {
       },
         1500);
     });
-}
+};
 
 // Создаём функцию сабмита для попапа добавления карточки
 const handleCardFormSubmit = (formValues) => {
@@ -142,16 +140,16 @@ const handleCardFormSubmit = (formValues) => {
       },
         1500)
     });
-}
+};
 
 // Создаём функцию сабмита попапа для удаления карточки
-const handleDeleteCardFormSubmit = (cardElement, cardId) => {
+const handleDeleteCardFormSubmit = (card) => {
   popupDeleteCard.renderLoading(true);
   popupDeleteCard.disableSubmitButton();
-  api.deleteCard(cardId)
+  api.deleteCard(card._id)
     .then(() => {
       popupDeleteCard.renderLoading(true, 'Удалено!');
-      cardElement.remove();
+      card.handleDeleteButtonClick();
       popupDeleteCard.close();
     })
     .catch((err) => {
@@ -164,7 +162,7 @@ const handleDeleteCardFormSubmit = (cardElement, cardId) => {
       },
         1500)
     });
-}
+};
 
 // Создаём функцию сабмита попапа для обновления аватара пользователя
 const handleNewAvatarFormSubmit = (formValues) => {
@@ -187,7 +185,7 @@ const handleNewAvatarFormSubmit = (formValues) => {
       },
         1500)
     });
-}
+};
 
 // Создаём функцию постановки/снятия лайка
 const handleLikeClick = (cardId, card) => {
@@ -200,7 +198,7 @@ const handleLikeClick = (cardId, card) => {
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
-}
+};
 
 
 // Создание экземпляров классов для попапов
@@ -260,7 +258,7 @@ profileImageElement.addEventListener('click', function () {
 // Слушатель, который открывает попап просмотра аватара пользователя
 profileImageElement.addEventListener('dblclick', function () {
   popupViewAvatar.open(profileNameElement.textContent, profileImageElement.src);
-})
+});
 
 
 // Запуск валидации форм
@@ -277,7 +275,7 @@ popupCardFormValidator.enableValidation();
 popupCardFormValidator.resetValidation();
 
 // Запускаем валидацию на форму из попапа обновления аватара пользователя
-const popupNewAvatarFormValidator = new FormValidator(config, popupNewAvatarElement);
+const popupNewAvatarFormValidator = new FormValidator(config, popupNewAvatarFormElement);
 popupNewAvatarFormValidator.enableValidation();
 popupNewAvatarFormValidator.resetValidation();
 

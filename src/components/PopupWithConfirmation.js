@@ -16,14 +16,13 @@ class PopupWithConfirmation extends Popup {
             e.preventDefault();
 
             // добавим вызов функции _handleFormSubmit
-            this._handleFormSubmit(this._cardElement, this._cardId);
+            this._handleFormSubmit(this._card);
         });
     }
 
-    open(cardElement, cardId) {
+    open(card) {
         super.open();
-        this._cardElement = cardElement;
-        this._cardId = cardId;
+        this._card = card;
     }
 
     disableSubmitButton() {

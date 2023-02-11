@@ -37,7 +37,6 @@ class Card {
 
     this._setEventListeners();
     this._handleRemoveDeleteButton();
-    this.isLiked();
     this._toggleLikeButton();
     this._showCountofLikes();
 
@@ -52,16 +51,11 @@ class Card {
 
   _setEventListeners() {
     this._likeButton.addEventListener('click', () => {
-      // this._toggleLikeButton();
-      this.isLiked(this._likes);
       this._handleLikeClick(this._id, this);
-      //console.log(e);
-      // this._toggleLikeButton(e);
     });
 
     this._deleteButton.addEventListener('click', () => {
-      this._handleDeleteClick(this._element, this._id);
-      //this._getSubmitCallBack(handleDeleteCardFormSubmit);
+      this._handleDeleteClick(this);
     });
 
     this._elementImg.addEventListener('click', () => {
@@ -75,10 +69,11 @@ class Card {
   }
 
   // добавили метод _handleDeleteButtonClick
-  _handleDeleteButtonClick() {
+  handleDeleteButtonClick = () => {
     this._element.remove();
     this._element = null;
   }
+
   // Добавили метод _handleRemoveDeleteButton
   _handleRemoveDeleteButton() {
     if (this._ownerId != this._userID) {
@@ -106,7 +101,5 @@ class Card {
     this._countOfLikes.textContent = likes.length;
   }
 }
-
-
 
 export { Card }
