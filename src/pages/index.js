@@ -271,7 +271,7 @@ const enableValidation = (config) => {
     formValidators[formName] = validator;
     // Запускаем валидацию для каждой отдельной формы
     validator.enableValidation();
-    // validator.resetValidation();
+    validator.resetValidation();
   });
 };
 
