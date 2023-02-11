@@ -18,18 +18,16 @@ import { Api } from '../components/Api.js';
 
 // Попап редактирования профиля
 const popupProfileOpenButtonElement = document.querySelector('.profile-info__edit-button'); // Нашли кнопку открытия попапа редактирования профиля.
-const popupProfileFormElement = document.forms["profile-popupform"]; //Нашли форму в попапе редактирования профиля
 
 // Попап добавления карточки  
 const popupCardOpenButtonElement = document.querySelector('.profile__add-button'); // Нашли кнопку открытия попапа добавления карточки
-const popupСardFormElement = document.forms["card-popupform"]; //Нашли форму в попапе добавления карточки
 
 // Попап обновления аватара
 const profileImageElement = document.querySelector('.profile__avatar'); // Нашли аватар в блоке профиля
-const popupNewAvatarFormElement = document.forms['new-avatar-popupform']; // Нашли форму в попапе обновления аватара
+
 
 // Попап просмотра аватара
-const profileNameElement = document.querySelector('.profile-info__name'); // Нашли элемент с именем пользователя в блоке профиля
+// const profileNameElement = document.querySelector('.profile-info__name'); // Нашли элемент с именем пользователя в блоке профиля
 
 // Взаимодействие с API
 // _______________________________________________________________________________________________________________
@@ -239,45 +237,59 @@ popupDeleteCard.setEventListeners();
 // чтобы инпуты в форме попапа приняли текстовые значения из блока профиля для имени и професии
 popupProfileOpenButtonElement.addEventListener('click', function () {
   popupProfile.setInputValues(userInfo.getUserInfo());
-  popupProfileFormValidator.resetValidation();
+  formValidators['profile-popupform'].resetValidation()
   popupProfile.open();
 });
 
 // Слушатель, который открывает попап добавления карточки по клику на кнопке add
 popupCardOpenButtonElement.addEventListener('click', function () {
-  popupCardFormValidator.resetValidation();
+  formValidators['card-popupform'].resetValidation()
   popupCard.open();
 });
 
 // Слушатель, который открывает попап обновления аватара пользователя
 profileImageElement.addEventListener('click', function () {
-  popupNewAvatarFormValidator.resetValidation();
+  formValidators['new-avatar-popupform'].resetValidation()
   popupNewAvatar.open();
 });
 
 // Хотел попробовать сделать ещё один попап для просмотра аватара пользователя, чтобы этот попап открывался 
 // по двойному щелчку. Но он, почему-то не открывается))
 // Слушатель, который открывает попап просмотра аватара пользователя
-profileImageElement.addEventListener('dblclick', function () {
-  popupViewAvatar.open(profileNameElement.textContent, profileImageElement.src);
-});
+// profileImageElement.addEventListener('dblclick', function () {
+//   popupViewAvatar.open(profileNameElement.textContent, profileImageElement.src);
+// });
 
 
-// Запуск валидации форм
+// Валидация форм
 // _______________________________________________________________________________________________________________
 
-// Запускаем валидацию на форму из попапа профиля
-const popupProfileFormValidator = new FormValidator(config, popupProfileFormElement);
-popupProfileFormValidator.enableValidation();
-popupProfileFormValidator.resetValidation();
+// Спасибо Вам огромное, ну что за чудо-функция! Было настолько интересно в ней разобраться и понять, как она 
+// работает! Впервые встречаю такую довольно сложную и разветвлённую функцию :)
+const formValidators = {} // Создаём пустой объект formValidators, в который будут записаны экземпляры класса
+// FormValidator для всех форм в проекте
 
-// Запускаем валидацию на форму из попапа добавления карточки
-const popupCardFormValidator = new FormValidator(config, popupСardFormElement);
-popupCardFormValidator.enableValidation();
-popupCardFormValidator.resetValidation();
+// Создаём общую для всех форм в проекте функцию включения валидации
+const enableValidation = (config) => {
+  // Создаём массив из всех форм в проекте, найдя их по селектору формы из объекта config для валидации
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
 
-// Запускаем валидацию на форму из попапа обновления аватара пользователя
-const popupNewAvatarFormValidator = new FormValidator(config, popupNewAvatarFormElement);
-popupNewAvatarFormValidator.enableValidation();
-popupNewAvatarFormValidator.resetValidation();
+  // Проходимся по всему массиву форм в проекте (formList) - с помощью метода forEch для массивов создаём для 
+  // каждой формы из массива свой отдельный экземпляр класса FormValidator. При создании экземпляров передаём, 
+  // как и полагается, 2 аргумента - элемент формы и объект config для валидации  
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement)
+    // получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name')
+
+    // вот тут в объект записываем каждую из форм проекта под именем, равным значению атрибута name каждой формы 
+    formValidators[formName] = validator;
+    // Запускаем валидацию для каждой отдельной формы
+    validator.enableValidation();
+    // validator.resetValidation();
+  });
+};
+
+// Вызываем (запускаем) общую для всех форм в проекте функцию включения валидации
+enableValidation(config);
 
