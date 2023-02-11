@@ -170,7 +170,7 @@ const handleNewAvatarFormSubmit = (formValues) => {
   popupNewAvatar.disableSubmitButton();
   api.addNewAvatar(formValues)
     .then((userData) => {
-      profileImageElement.src = userData.avatar;
+      userInfo.setUserInfo(userData);
       popupNewAvatar.renderLoading(true, 'Сохранено!');
       setTimeout(() => popupNewAvatar.close(), 1000);
     })
@@ -255,6 +255,8 @@ profileImageElement.addEventListener('click', function () {
   popupNewAvatar.open();
 });
 
+// Хотел попробовать сделать ещё один попап для просмотра аватара пользователя, чтобы этот попап открывался 
+// по двойному щелчку. Но он, почему-то не открывается))
 // Слушатель, который открывает попап просмотра аватара пользователя
 profileImageElement.addEventListener('dblclick', function () {
   popupViewAvatar.open(profileNameElement.textContent, profileImageElement.src);
