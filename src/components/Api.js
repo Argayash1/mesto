@@ -14,24 +14,24 @@ class Api {
   }
 
   // Огромное Вам спасибо за этот метод, с большим интересом разобрался и использовал его!
-  _request(url, options) {
-    return fetch(url, options).then(this._checkResponse)
+  _request(endpoint, options) {
+    return fetch(`${this._baseUrl}${endpoint}`, options).then(this._checkResponse)
   }
 
   getUserInfo() {
-    return this._request(this._baseUrl + '/users/me', {
+    return this._request('/users/me', {
       headers: this._headers
     })
   }
 
   getInitialCards() {
-    return this._request(this._baseUrl + '/cards', {
+    return this._request('/cards', {
       headers: this._headers
     })
   }
 
   editProfile(formValues) {
-    return this._request(this._baseUrl + '/users/me', {
+    return this._request('/users/me', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -42,7 +42,7 @@ class Api {
   }
 
   addNewCard(formValues) {
-    return this._request(this._baseUrl + '/cards', {
+    return this._request('/cards', {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -53,21 +53,21 @@ class Api {
   }
 
   deleteCard(cardId) {
-    return this._request(this._baseUrl + '/cards/' + cardId, {
+    return this._request('/cards/' + cardId, {
       method: 'DELETE',
       headers: this._headers
     })
   }
 
   setLike(cardId, method) {
-    return this._request(this._baseUrl + '/cards/' + cardId + '/likes', {
+    return this._request('/cards/' + cardId + '/likes', {
       method: method,
       headers: this._headers
     })
   }
 
   addNewAvatar(formValues) {
-    return this._request(this._baseUrl + '/users/me/avatar', {
+    return this._request('/users/me/avatar', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
