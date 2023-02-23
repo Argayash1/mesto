@@ -4,7 +4,7 @@
 import './index.css';
 import config from '../utils/config.js';
 import { popupProfileOpenButtonElement, popupCardOpenButtonElement, profileImageElement } from '../utils/constants.js';
-import { Card } from '../components/Сard.js';
+import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
