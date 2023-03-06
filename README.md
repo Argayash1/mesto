@@ -26,6 +26,13 @@
 ## Инструкция по использования проекта.  
 В проекте исопльзуется язык HTML версии 5.3 в сочетании со стилевыми CSS-файлами.
 
+Инструкция по установке:
+* git clone https://github.com/Argayash1/mesto.git
+* cd mesto
+* npm i webpack --save-dev
+* npm run build
+* npm run dev
+
 ## Ссылка на макет проекта 
 
 * [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
